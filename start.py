@@ -106,6 +106,7 @@ def new_ui():
     
     # Run the maze.py script after the dialogue
     subprocess.run(["python", "maze.py"], check=True)
+    subprocess.run(["python", "fallout.py"], check=True)
     subprocess.run(["python", "pop-ups.py"], check=True)
 
 
