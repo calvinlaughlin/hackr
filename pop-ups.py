@@ -4,10 +4,15 @@ import random
 import time
 from threading import Thread
 import pygame  # For playing sounds
+import os
 
 class PopupGame:
     def __init__(self, root):
         self.root = root
+        self.root.geometry("+{}+{}".format(
+            int((self.root.winfo_screenwidth() - self.root.winfo_reqwidth()) / 2),
+            int((self.root.winfo_screenheight() - self.root.winfo_reqheight()) / 2)
+        ))  # Center the main window
         self.popups = []
         self.game_active = False
         

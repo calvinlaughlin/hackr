@@ -2,6 +2,7 @@ import curses
 import random
 import time
 import pygame
+import subprocess
 
 def matrix_wash(stdscr):
     height, width = stdscr.getmaxyx()
@@ -64,38 +65,48 @@ pygame.mixer.init()
 # Load a sound (ensure you have a 'text.wav' file in your project directory)
 key_sound = pygame.mixer.Sound('text.wav')
 
-def stream_text(stdscr, message, character='Computer', pause_duration=1.0):
+def stream_text(stdscr, messages):
     height, width = stdscr.getmaxyx()
     
-    # Display the character label if provided
-    if character:
-        label_text = f"{character.upper()}: "
-        static_row = height // 2
-        label_col = (width - len(message) - len(label_text)) // 2
-        stdscr.addstr(static_row, label_col, label_text)
-        col_offset = len(label_text)
-        stdscr.refresh()
-        time.sleep(pause_duration)
-    else:
-        static_row = height // 2
-        col_offset = 0
+    for message, character in messages:
+        stdscr.clear()  # Clear the screen before starting a new message
+        if character:
+            label_text = f"{character.upper()}: "
+            static_row = height // 2
+            label_col = (width - len(message) - len(label_text)) // 2
+            stdscr.addstr(static_row, label_col, label_text, curses.A_BOLD)
+        else:
+            static_row = height // 2
+            label_col = (width - len(message)) // 2
 
-    # Calculate starting column for message
-    message_col = label_col
+        message_col = label_col + len(label_text if character else '')
 
-    # Print each character with a sound effect at a random chance
-    for i, char in enumerate(message):
-        stdscr.addch(static_row + 1, message_col + i, char)
-        stdscr.refresh()
-        # Play the typing sound at random
-        if random.random() < 0.25:  # Adjust the probability as needed
-            key_sound.play()
-        time.sleep(0.03)  # Adjust for typing speed and sound effect
+        stdscr.refresh()  # Refresh after setting up labels and before typing starts
 
-    stdscr.getch()
+        # Print each character with a sound effect at a random chance
+        for i, char in enumerate(message):
+            stdscr.addch(static_row + 1, message_col + i, char)  # Place each character
+            stdscr.refresh()  # Refresh after each character to see the typing effect
+            if random.random() < 0.25:  # Play sound with some probability
+                key_sound.play()
+            time.sleep(0.03)  # Typing speed
+
+        time.sleep(1)  # Pause after each message
+
+    
 
 def new_ui():
-    curses.wrapper(stream_text, 'Hello. What is your name?', 'Computer')
+    messages = [
+        ('What took you so fucking long? We don\'t have much time left.  ', 'Reznov'),
+        ('Next one\'s all you. Should be simple. You crack it, we\'re in.', 'Reznov'),
+        ('Ready? Of course you are. Let\'s finish this job.              ', 'Reznov')
+    ]
+    curses.wrapper(stream_text, messages)
+    curses.endwin()
+    
+    # Run the maze.py script after the dialogue
+    subprocess.run(["python", "maze.py"], check=True)
+    subprocess.run(["python", "pop-ups.py"], check=True)
 
 
 def main(stdscr):
