@@ -105,9 +105,9 @@ def new_ui():
     curses.endwin()
     
     # Run the maze.py script after the dialogue
-    subprocess.run(["python", "maze.py"], check=True)
-    subprocess.run(["python", "fallout.py"], check=True)
-    subprocess.run(["python", "pop-ups.py"], check=True)
+    subprocess.run(["python3", "maze.py"], check=True)
+    subprocess.run(["python3", "fallout.py"], check=True)
+    subprocess.run(["python3", "pop-ups.py"], check=True)
 
 
 def main(stdscr):
