@@ -96,6 +96,59 @@ def stream_text(stdscr, messages):
     
 
 def new_ui():
+    t1 = [
+        ('[NAME], what took you so fucking long? We don’t have much time left.       ', 'Wolfe'),
+        ('I’m in position. I can practically smell that vault from here.             ', 'Wolfe'),
+        ('First thing, though, I need you to chart me a path through these air vents.', 'Wolfe'),  
+        ('I’m completely fuckin lost.                                                ', 'Wolfe'),
+        ('Get in the security panel and find me a way out of this fuckin rat maze.   ', 'Wolfe')
+    ]
+    t2 = [
+        ('Ok, I’m in position.                                                                                       ', 'Wolfe'),
+        ('Waiting for a guard to pass under me… (talking to self) yeah you fuckin’ scum get outta here.              ', 'Wolfe'),
+        ('Alright I’m making my through to the server room to disable the cameras for the rest of the team to get in.', 'Wolfe'),
+        ('This place is a bloody fortress.                                                                           ', 'Wolfe'),
+        ('Shit mate, there’s a keypad here to get into the server room.                                              ', 'Wolfe'),
+        ('I need you to hack into the keypad to get me in.                                                           ', 'Wolfe'),
+        ('It looks like you’ve only got four tries.                                                                  ', 'Wolfe'),
+    ]
+    t3 = [
+        ('Alright, I’m in. Good shit working through that keypad. Now I’m in the server room.                    ', 'Wolfe'),
+        ('Let me just open this laptop…                                                                          ', 'Wolfe'),
+        ('Type the password in…                                                                                  ', 'Wolfe'),
+        ('Click on this link to download the mainframe, OH SHIT I downloaded a virus, help me get rid of it mate!', 'Wolfe'),
+    ]
+    t4 = [
+        ('', 'Wolfe'),
+        ('', 'Wolfe'),
+        ('', 'Wolfe'),
+        ('', 'Wolfe'),
+    ]
+    t5 = [
+        ('', 'Wolfe'),
+        ('', 'Wolfe'),
+        ('', 'Wolfe'),
+        ('', 'Wolfe'),
+    ]
+
+    curses.wrapper(stream_text, t1)
+    curses.endwin()
+    
+    # Run the maze.py script after the dialogue
+    subprocess.run(["python3", "maze.py"], check=True)
+    curses.wrapper(stream_text, t2)
+    curses.endwin()
+    
+    subprocess.run(["python3", "fallout.py"], check=True)
+    curses.wrapper(stream_text, t3)
+    
+    subprocess.run(["python3", "pop-ups.py"], check=True)
+    curses.wrapper(stream_text, t4)
+    subprocess.run(["python3", "quick.py"], check=True)
+    curses.wrapper(stream_text, t5)
+    
+def diego_story():
+    # place to add in the dialogue/flow of the storyline diego came up with 
     messages = [
         ('What took you so fucking long? We don\'t have much time left.  ', 'Reznov'),
         ('Next one\'s all you. Should be simple. You crack it, we\'re in.', 'Reznov'),
@@ -108,6 +161,8 @@ def new_ui():
     subprocess.run(["python3", "maze.py"], check=True)
     subprocess.run(["python3", "fallout.py"], check=True)
     subprocess.run(["python3", "pop-ups.py"], check=True)
+    subprocess.run(["python3", "quick.py"], check=True)
+
 
 
 def main(stdscr):
