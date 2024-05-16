@@ -8,7 +8,7 @@ def main(stdscr):
     stdscr.timeout(100)
 
     levels = 10
-    start = 0.05
+    start = 0.01
 
     num_tries = 0
 
