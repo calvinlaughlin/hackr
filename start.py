@@ -11,26 +11,69 @@ import curses
 
 def enter_name(stdscr):
     curses.curs_set(1)  # Show the cursor
-    stdscr.clear()
-    stdscr.refresh()
-
-    stdscr.addstr(0, 0, "Please enter your name: ")
-    stdscr.refresh()
-
     curses.echo()  # Enable echoing of characters
-
     name = ""
+    prompt = ">>> USERNAME: "
+
+    intro_text = [
+        "Welcome to the hackOS monitor.",
+        "Your hackOS connection id is 42",
+        "Server version: 1.0.0-hackOS 0ubuntu1",
+        "",
+        "Copyright (c) 2024, hackOS Corporation.",
+        "",
+    ]
+
+    stdscr.clear()
+    height, width = stdscr.getmaxyx()
+
+    # Calculate center position for the prompt
+    prompt_x = (width - len(prompt)) // 2
+    input_y = height // 2
+
+    # Calculate start position for intro text halfway between top and username input
+    intro_start_y = (input_y // 2) - (len(intro_text) // 2)
+
+    # Display the introductory text
+    for i, line in enumerate(intro_text):
+        x = (width - len(line)) // 2
+        stdscr.addstr(intro_start_y + i, x, line)
+        stdscr.refresh()
+        time.sleep(0.1)  # Simulate typing effect
+
+    # Display the input prompt for the first time
+    stdscr.addstr(input_y, prompt_x, prompt)
+    stdscr.refresh()
+
     while True:
         char = stdscr.getch()
+
         if char == curses.KEY_ENTER or char in [10, 13]:
             break
         elif char == curses.KEY_BACKSPACE or char == 127:
-            name = name[:-1]
-            y, x = stdscr.getyx()
-            stdscr.move(y, x - 1)
-            stdscr.delch()
+            if len(name) > 0:
+                name = name[:-1]
+                stdscr.addstr(input_y, prompt_x + len(prompt) + len(name), ' ')
+                stdscr.move(input_y, prompt_x + len(prompt) + len(name))
+        elif char == curses.KEY_RESIZE:
+            height, width = stdscr.getmaxyx()
+            prompt_x = (width - len(prompt)) // 2
+            input_y = height // 2
+            intro_start_y = (input_y // 2) - (len(intro_text) // 2)
+            stdscr.clear()
+            for i, line in enumerate(intro_text):
+                x = (width - len(line)) // 2
+                stdscr.addstr(intro_start_y + i, x, line)
+            stdscr.addstr(input_y, prompt_x, prompt + name)
         else:
             name += chr(char)
+
+        # Clear the current input line to avoid artifacts
+        stdscr.addstr(input_y, prompt_x + len(prompt), ' ' * (width - prompt_x - len(prompt)))
+        
+        # Update the input prompt with the current name
+        stdscr.addstr(input_y, prompt_x + len(prompt), name)
+        stdscr.refresh()
 
     curses.noecho()  # Disable echoing of characters
     curses.curs_set(0)  # Hide the cursor
