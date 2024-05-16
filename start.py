@@ -4,7 +4,7 @@ import time
 import pygame
 import subprocess
 from maze import main as maze_main
-from dialogue import stream_text, enter_name
+from dialogue import stream_text, enter_name, display_computer_text
 from matrix import matrix_wash, decay_from_top
 
 import curses
@@ -62,21 +62,34 @@ def new_ui(username='ANONYMOUS'):
     subprocess.run(["python3", "quick.py"], check=True)
     curses.wrapper(stream_text, t5)
     
-def diego_story():
-    # place to add in the dialogue/flow of the storyline diego came up with 
-    messages = [
-        ('What took you so fucking long? We don\'t have much time left.  ', 'Reznov'),
-        ('Next one\'s all you. Should be simple. You crack it, we\'re in.', 'Reznov'),
-        ('Ready? Of course you are. Let\'s finish this job.              ', 'Reznov')
-    ]
-    curses.wrapper(stream_text, messages)
-    curses.endwin()
+def diego_story(stdscr):
+    username = enter_name(stdscr)
+    # place to add in the dialogue/flow of the storyline diego came up with
+    computer_texts = [
+        f">>> Welcome, Operative. Code name: {username}",
+        ">>> Mission: Heist Protocol – Operation Monaco",
+        ">>> Objective: Hack into Quantum Financials Trust servers",
+        "    and wire 40 million to offshore account [3141-5926-5358].",
+        "",
+        "Press [SPACE] to continue."
+    ] 
+    display_computer_text(stdscr, computer_texts)
+    key = stdscr.getch()
     
-    # Run the maze.py script after the dialogue
-    subprocess.run(["python3", "maze.py"], check=True)
-    subprocess.run(["python3", "fallout.py"], check=True)
-    subprocess.run(["python3", "pop-ups.py"], check=True)
-    subprocess.run(["python3", "quick.py"], check=True)
+    stdscr.clear()
+    computer_texts2 = [
+        ">>> Initiating connection to Server...",
+        ">>> Establishing secure link...",
+        "",
+        ">>> Access granted. (blinks twice)"
+    ] 
+    display_computer_text(stdscr, computer_texts2)
+    key = stdscr.getch()
+    if key == ord(' '):
+        return
+    
+
+
 
 def main(stdscr):
     # Turn off cursor blinking
@@ -118,12 +131,18 @@ def main(stdscr):
         elif key == curses.KEY_ENTER or key in [10, 13]:
             break
 
+    # SET TO 'TRUE' TO SEE DEVELOPMENT STORY
+    diego = True
+
     # Execute the selected option
     if selected_idx == 0:
         matrix_wash(stdscr)
         decay_from_top(stdscr)
-        username = enter_name(stdscr)
-        new_ui(username)
+        if diego:
+            diego_story(stdscr)
+        else:
+            username = enter_name(stdscr)
+            new_ui(username)
     elif selected_idx == 1:
         pass
 

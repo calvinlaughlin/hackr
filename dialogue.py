@@ -39,8 +39,20 @@ def stream_text(stdscr, messages):
         time.sleep(1)  # Pause after each message
     stdscr.clear()  # Clear the screen after all messages are displayed
 
+def display_computer_text(stdscr, texts):
+    height, width = stdscr.getmaxyx()
+    midpoint_y = height // 2
+    y = midpoint_y // 2
+    x = 10 # 2 spaces padding from the right edge
+
+    # Simulate typing effect
+    for i in range(len(texts)):
+        stdscr.addstr(y + i, x, texts[i])
+        stdscr.refresh()
+        if i != len(texts) - 1:
+            time.sleep(1)  # Typing speed
+
 def enter_name(stdscr):
-    curses.curs_set(1)  # Show the cursor
     curses.echo()  # Enable echoing of characters
     name = ""
     prompt = ">>> USERNAME: "
@@ -75,6 +87,7 @@ def enter_name(stdscr):
     stdscr.addstr(input_y, prompt_x, prompt)
     stdscr.refresh()
 
+    curses.curs_set(1)  # Show the cursor
     while True:
         char = stdscr.getch()
 
@@ -108,4 +121,5 @@ def enter_name(stdscr):
     curses.noecho()  # Disable echoing of characters
     curses.curs_set(0)  # Hide the cursor
 
+    stdscr.clear()
     return name.upper()
