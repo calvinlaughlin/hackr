@@ -63,12 +63,12 @@ def new_ui(username='ANONYMOUS'):
     subprocess.run(["python3", "quick.py"], check=True)
     curses.wrapper(stream_text, t5)
     
-def diego_story(stdscr):
+def act1(stdscr):
     username = enter_name(stdscr)
     # place to add in the dialogue/flow of the storyline diego came up with
     computer_texts = [
         f">>> Welcome, Operative. Code name: {username}",
-        ">>> Mission: Heist Protocol – Operation Monaco",
+        ">>> Mission: Heist Protocol - Operation Monaco",
         ">>> Objective: Hack into Quantum Financials Trust servers",
         "    and wire 40 million to offshore account [3141-5926-5358].",
         "",
@@ -85,15 +85,17 @@ def diego_story(stdscr):
         ">>> Access granted."
     ] 
     display_computer_text(stdscr, computer_texts2, blinking=True)
+    
     r1 = [
         (f'{username}! {username}! What the fuck are you doing?!', 'Roadman'),
-        ('You’re in, this is the only chance we got.', 'Roadman'),
-        ('We’re monitoring your progress from HQ. No mistakes.', 'Roadman'),
+        ("You're in, this is the only chance we got.", 'Roadman'),
+        ("We're monitoring your progress from HQ. No mistakes.", 'Roadman'),
         ('@Bla3kH4wk and @AlexeiX, you two access the financial records.', 'Roadman'),
         (f'{username}, begin the transfer protocol.', 'Roadman')
     ]
     stream_text(stdscr, r1)
     stdscr.clear()
+    
     computer_texts3 = [
         ">>> Accessing financial records...",
         "",
@@ -123,24 +125,85 @@ def diego_story(stdscr):
     stdscr.clear()
     display_computer_text(stdscr, computer_texts3, blinking=True)
     time.sleep(3)
+    
     r2 = [
-        ('They’ve bugged the account.', 'Roadman'),
+        ("They've bugged the account.", 'Roadman'),
         (f'{username} you need to disable security. NOW.', 'Roadman')
     ]
     stdscr.refresh()
     stdscr.clear()
     stream_text(stdscr, r2)
+    
+    # typing puzzle
     curses.wrapper(typing_puzzle)
+    
     computer_texts4 = [
         ">>> Countermeasures engaged. Shutting down Connection."
     ] 
     stdscr.refresh()
     stdscr.clear()
     display_computer_text(stdscr, computer_texts4)
+    
     r3 = [
-        (f'For fucks sake {username}, what’s happening. I thought you were supposed to be good.', 'Roadman'),
-        ('Abort! Get out of there now! We’re cooked.', 'Roadman')
+        (f"For fucks sake {username}, what's happening. I thought you were supposed to be good.", 'Roadman'),
+        ("Abort! Get out of there now! We're cooked.", 'Roadman')
     ]
+    stdscr.refresh()
+    stdscr.clear()
+    stream_text(stdscr, r3)
+    
+    # TODO: make text red
+    computer_texts5 = [
+        ">>> INITIATING TROJAN DEFENCE SEQUENCE.",
+        ">>> TRACKING SOURCE LOCATION.",
+        ">>> TRACE INITIATED."
+    ]
+    stdscr.refresh()
+    stdscr.clear()
+    display_computer_text(stdscr, computer_texts5)
+    
+    r4 = [
+        (f"Shit, it's too late. You need to wipe your computer and disappear.", 'Roadman')
+    ]
+    stdscr.refresh()
+    stdscr.clear()
+    stream_text(stdscr, r4)
+    
+    computer_texts6 = [
+        ">>> TRACE COMPLETE. LOCATION IDENTIFIED.",
+        ">>> DEPLOYING COUNTER-OPS..."
+    ]
+    stdscr.refresh()
+    stdscr.clear()
+    display_computer_text(stdscr, computer_texts6)
+    
+    r5 = [
+        (f"They've got us too. We're compromised. Go dark. You’re on your own now.", 'Roadman')
+    ]
+    stdscr.refresh()
+    stdscr.clear()
+    stream_text(stdscr, r5)
+    
+    computer_texts7 = [
+        ">>> FROM: Unknown",
+        ">>> SUBJECT: Consequences.",
+        ">>> MESSAGE: ",
+        f">>> {username},",
+        ">>> Your actions have led to consequences. Things you can’t come back  ",
+        ">>> from. You’ve been blacklisted from the network . All your accounts",
+        ">>> have been frozen. Trust no one. ",
+        ">>> Good luck.",
+    ]
+    stdscr.refresh()
+    stdscr.clear()
+    display_computer_text(stdscr, computer_texts7)
+    
+    computer_texts8 = [
+        "[CHECKPOINT REACHED]"
+    ]
+    stdscr.refresh()
+    stdscr.clear()
+    display_computer_text(stdscr, computer_texts8)
     
 
 
@@ -194,7 +257,7 @@ def main(stdscr):
         matrix_wash(stdscr)
         decay_from_top(stdscr)
         if diego:
-            diego_story(stdscr)
+            act1(stdscr)
         else:
             username = enter_name(stdscr)
             new_ui(username)
