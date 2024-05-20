@@ -1,83 +1,70 @@
-import time
-import random
 import curses
-import threading
-import pygame
+import random
+import time
 
-# Initialize Pygame for sound effects
-pygame.init()
-pygame.mixer.init()
+# List of random codes
+codes = ["alpha", "bravo", "charlie", "delta", "echo", "foxtrot", "golf", "hotel", "india", "juliet", "kilo", "lima", "mike", "november", "oscar", "papa", "quebec", "romeo", "sierra", "tango", "uniform", "victor", "whiskey", "xray", "yankee"]
 
-# Load a sound (ensure you have a 'text.wav' file in your project directory)
-key_sound = pygame.mixer.Sound('text.wav')
+def typing_puzzle(stdscr):
+    # Setup curses
+    curses.curs_set(1)
+    stdscr.nodelay(1)
+    stdscr.timeout(100)
 
-def play_sound():
-    key_sound.play()
-
-def display_timer(stdscr, start_time):
-    height, width = stdscr.getmaxyx()
-    y, x = 0, width - 15  # Top-right corner
-
-    while time.time() - start_time < 60:
-        elapsed_time = int(time.time() - start_time)
-        remaining_time = 60 - elapsed_time
-        timer_text = f"Time: {remaining_time}s"
-        stdscr.addstr(y, x, timer_text, curses.A_BOLD)
-        stdscr.refresh()
-        time.sleep(1)
-
-def hacker_puzzle(stdscr):
-    height, width = stdscr.getmaxyx()
+    # Initialize variables
     start_time = time.time()
-    puzzle_instructions = [
-        ">>> Initiating decryption protocol...",
-        ">>> Decrypt the following codes within 60 seconds!",
-        ">>> TYPE FAST OR YOU WILL FAIL!",
-        ">>> Press any key to start."
-    ]
-    
-    stdscr.clear()
-    for i, line in enumerate(puzzle_instructions):
-        stdscr.addstr(height // 2 - 2 + i, (width - len(line)) // 2, line)
-        stdscr.refresh()
-        time.sleep(1)
-    stdscr.getch()
+    timer_duration = 60
+    input_text = ""
+    code_list = [random.choice(codes) for _ in range(50)]
+    current_code = code_list.pop(0)
 
-    codes = [
-        "42B8AFD9", "7E4A6B13", "3C8E9F2A", "9B5D7C1E",
-        "F3A7B8E4", "8C1D9E7B", "E7F3B6C2", "A1B8E9F7"
-    ]
-    stdscr.clear()
-
-    timer_thread = threading.Thread(target=display_timer, args=(stdscr, start_time))
-    timer_thread.start()
-
-    random.shuffle(codes)
-    code_index = 0
-    user_input = ""
-    
-    while time.time() - start_time < 60:
+    while True:
+        # Calculate remaining time
+        elapsed_time = time.time() - start_time
+        remaining_time = max(0, timer_duration - int(elapsed_time))
+        
+        # Clear screen
         stdscr.clear()
-        current_code = codes[code_index % len(codes)]
-        stdscr.addstr(height // 2 - 1, (width - len(current_code)) // 2, current_code, curses.A_BOLD)
-        stdscr.addstr(height // 2 + 1, (width - len(user_input)) // 2, user_input, curses.A_BOLD)
+
+        # Display timer
+        stdscr.addstr(0, curses.COLS - 10, f"Time: {remaining_time}s")
+        
+        # Display upcoming codes and count
+        stdscr.addstr(0, 0, f"UPCOMING CODES ({len(code_list)})")
+        for idx, code in enumerate(code_list[:10], start=1):
+            stdscr.addstr(idx, 0, code)
+        
+        # Display current code to type
+        stdscr.addstr(2, curses.COLS // 2 - len(current_code) // 2, current_code)
+        
+        # Display input text
+        stdscr.addstr(4, curses.COLS // 2 - len(input_text) // 2, input_text)
+        
+        # Refresh the screen
         stdscr.refresh()
         
-        key = stdscr.getch()
-        if key == ord(current_code[len(user_input)]):
-            user_input += chr(key)
-            if random.random() < 0.1:
-                play_sound()
-            if user_input == current_code:
-                code_index += 1
-                user_input = ""
-        elif key == 27:  # Escape key to exit
-            return False
-    
-    timer_thread.join()
+        # Get user input
+        try:
+            key = stdscr.getkey()
+        except:
+            continue
+        
+        if key == '\n':
+            # Check if input text matches current code
+            if input_text == current_code and code_list:
+                current_code = code_list.pop(0)
+            input_text = ""
+        elif key == '\b' or key == '\x7f':  # Handle backspace
+            input_text = input_text[:-1]
+        elif len(key) == 1:
+            input_text += key
 
+        # End the game after the timer runs out
+        if remaining_time <= 0:
+            break
+
+    # Game over screen
     stdscr.clear()
-    stdscr.addstr(height // 2, (width - len(">>> MISSION FAILED! TIME'S UP! <<<")) // 2, ">>> MISSION FAILED! TIME'S UP! <<<", curses.A_BOLD | curses.A_BLINK)
+    stdscr.addstr(curses.LINES // 2, curses.COLS // 2 - 5, "TIME UP!")
     stdscr.refresh()
-    time.sleep(5)
-    return True
+    time.sleep(2)

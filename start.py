@@ -6,6 +6,7 @@ import subprocess
 from maze import main as maze_main
 from dialogue import stream_text, enter_name, display_computer_text, enter_account_number
 from matrix import matrix_wash, decay_from_top
+from impossible import typing_puzzle
 
 import curses
 
@@ -129,6 +130,18 @@ def diego_story(stdscr):
     stdscr.refresh()
     stdscr.clear()
     stream_text(stdscr, r2)
+    curses.wrapper(typing_puzzle)
+    computer_texts4 = [
+        ">>> Countermeasures engaged. Shutting down Connection."
+    ] 
+    stdscr.refresh()
+    stdscr.clear()
+    display_computer_text(stdscr, computer_texts4)
+    r3 = [
+        (f'For fucks sake {username}, what’s happening. I thought you were supposed to be good.', 'Roadman'),
+        ('Abort! Get out of there now! We’re cooked.', 'Roadman')
+    ]
+    
 
 
 

@@ -178,7 +178,7 @@ def enter_account_number(stdscr, account_number):
             input_number += char
             stdscr.addstr(y, x + len(prompt) + len(input_number) - 1, char, curses.A_BOLD)
             stdscr.refresh()
-            display_code_like_text(stdscr, code_texts[code_index % len(code_texts)], y + 2 + (code_index % len(code_texts)), 0)
+            # display_code_like_text(stdscr, code_texts[code_index % len(code_texts)], y + 2 + (code_index % len(code_texts)), 0)
             code_index += 1
         elif key == 10:  # Enter key
             if input_number == account_number:
