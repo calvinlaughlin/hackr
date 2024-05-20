@@ -18,11 +18,11 @@ def stream_text(stdscr, messages):
         if character:
             label_text = f"{character.upper()}: "
             static_row = height // 2
-            label_col = (width - len(message) - len(label_text)) // 2
+            label_col = 10
             stdscr.addstr(static_row, label_col, label_text, curses.A_BOLD)
         else:
             static_row = height // 2
-            label_col = (width - len(message)) // 2
+            label_col = 10
 
         message_col = label_col + len(label_text if character else '')
 
@@ -39,11 +39,13 @@ def stream_text(stdscr, messages):
         time.sleep(1)  # Pause after each message
     stdscr.clear()  # Clear the screen after all messages are displayed
 
-def display_computer_text(stdscr, texts):
+def display_computer_text(stdscr, texts, blinking=False):
     height, width = stdscr.getmaxyx()
     midpoint_y = height // 2
     y = midpoint_y // 2
-    x = 10 # 2 spaces padding from the right edge
+    x = 10  # 2 spaces padding from the right edge
+
+    stdscr.nodelay(True)  # Make getch non-blocking
 
     # Simulate typing effect
     for i in range(len(texts)):
@@ -51,6 +53,20 @@ def display_computer_text(stdscr, texts):
         stdscr.refresh()
         if i != len(texts) - 1:
             time.sleep(1)  # Typing speed
+        if i == len(texts) - 1:
+            if blinking:
+                for _ in range(3):
+                    stdscr.addstr(y + i, x, texts[i], curses.A_BLINK | curses.A_BOLD)
+                    stdscr.refresh()
+                    time.sleep(0.5)
+                    stdscr.addstr(y + i, x, " " * len(texts[i]))
+                    stdscr.refresh()
+                    time.sleep(0.5)
+            else:
+                stdscr.addstr(y + i, x, texts[i], curses.A_BOLD)
+                stdscr.refresh()
+    
+    stdscr.nodelay(False)
 
 def enter_name(stdscr):
     curses.echo()  # Enable echoing of characters
@@ -123,3 +139,92 @@ def enter_name(stdscr):
 
     stdscr.clear()
     return name.upper()
+
+def display_code_like_text(stdscr, text, y, x):
+    for char in text:
+        stdscr.addstr(y, x, char, curses.A_BOLD)
+        stdscr.refresh()
+        time.sleep(0.05)
+        x += 1
+
+def enter_account_number(stdscr, account_number):
+    height, width = stdscr.getmaxyx()
+    y = height // 2
+    x = width // 2 - len("Enter account number: ") // 2
+
+    prompt = "Enter account number: "
+    stdscr.addstr(y, x, prompt, curses.A_BOLD)
+    stdscr.addstr(y + 1, x, f"Account number: {account_number}", curses.A_DIM)
+    stdscr.refresh()
+
+    input_number = ""
+    code_texts = [
+        "#include <iostream>",
+        "#include <cmath>",
+        "using namespace std;",
+        "int main() {",
+        "    double a = 2.5, b = 3.8;",
+        "    double result = pow(a, b) + sqrt(a * b) - log(a + b);",
+        "    result += sin(result) * cos(a);",
+        "    cout << \"Result: \" << result << endl;",
+        "    return 0;",
+    ]
+    code_index = 0
+
+    while True:
+        key = stdscr.getch()
+        if key in range(48, 58):  # Number keys
+            char = chr(key)
+            input_number += char
+            stdscr.addstr(y, x + len(prompt) + len(input_number) - 1, char, curses.A_BOLD)
+            stdscr.refresh()
+            display_code_like_text(stdscr, code_texts[code_index % len(code_texts)], y + 2 + (code_index % len(code_texts)), 0)
+            code_index += 1
+        elif key == 10:  # Enter key
+            if input_number == account_number:
+                break
+        elif key == 27:  # Escape key to exit
+            return False
+
+    return True
+
+def main(stdscr):
+    # Test enter_name function
+    username = enter_name(stdscr)
+    stdscr.clear()
+    stdscr.addstr(0, 0, f"Username entered: {username}")
+    stdscr.refresh()
+    time.sleep(2)
+
+    # Test display_computer_text function
+    stdscr.clear()
+    computer_texts = [
+        f">>> Welcome, Operative. Code name: {username}",
+        ">>> Mission: Heist Protocol – Operation Monaco",
+        ">>> Objective: Hack into Quantum Financials Trust servers",
+        "    and wire 40 million to offshore account [3141-5926-5358].",
+        "",
+        "Press [SPACE] to continue."
+    ]
+    display_computer_text(stdscr, computer_texts)
+    key = stdscr.getch()
+
+    # Test enter_account_number function
+    account_number = "314159265358"  # Example account number
+    stdscr.clear()
+    if enter_account_number(stdscr, account_number):
+        stdscr.clear()
+        final_texts = [
+            ">>> Account number verified.",
+            ">>> Transfer in progress...",
+            ">>> Transfer complete. Mission accomplished."
+        ]
+        display_computer_text(stdscr, final_texts)
+    else:
+        stdscr.addstr(0, 0, "Operation aborted.")
+        stdscr.refresh()
+        time.sleep(2)
+
+if __name__ == "__main__":
+    curses.wrapper(main)
+    pygame.quit()

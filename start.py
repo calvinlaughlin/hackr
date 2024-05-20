@@ -4,7 +4,7 @@ import time
 import pygame
 import subprocess
 from maze import main as maze_main
-from dialogue import stream_text, enter_name, display_computer_text
+from dialogue import stream_text, enter_name, display_computer_text, enter_account_number
 from matrix import matrix_wash, decay_from_top
 
 import curses
@@ -67,7 +67,7 @@ def diego_story(stdscr):
     # place to add in the dialogue/flow of the storyline diego came up with
     computer_texts = [
         f">>> Welcome, Operative. Code name: {username}",
-        ">>> Mission: Heist Protocol – Operation Monaco",
+        ">>> Mission: Heist Protocol – Operation Monaco",
         ">>> Objective: Hack into Quantum Financials Trust servers",
         "    and wire 40 million to offshore account [3141-5926-5358].",
         "",
@@ -81,13 +81,55 @@ def diego_story(stdscr):
         ">>> Initiating connection to Server...",
         ">>> Establishing secure link...",
         "",
-        ">>> Access granted. (blinks twice)"
+        ">>> Access granted."
     ] 
-    display_computer_text(stdscr, computer_texts2)
+    display_computer_text(stdscr, computer_texts2, blinking=True)
+    r1 = [
+        (f'{username}! {username}! What the fuck are you doing?!', 'Roadman'),
+        ('You’re in, this is the only chance we got.', 'Roadman'),
+        ('We’re monitoring your progress from HQ. No mistakes.', 'Roadman'),
+        ('@Bla3kH4wk and @AlexeiX, you two access the financial records.', 'Roadman'),
+        (f'{username}, begin the transfer protocol.', 'Roadman')
+    ]
+    stream_text(stdscr, r1)
+    stdscr.clear()
+    computer_texts3 = [
+        ">>> Accessing financial records...",
+        "",
+        ">>> Access granted.",
+        ">>> Connecting to offshore account..."
+    ] 
+    display_computer_text(stdscr, computer_texts3)
+    account_number = "314159265358"  # Example account number
+    stdscr.clear()
+    if enter_account_number(stdscr, account_number):
+        stdscr.clear()
+        final_texts = [
+            ">>> Account number verified.",
+            ">>> Transfer in progress..."
+        ]
+        display_computer_text(stdscr, final_texts)
+    else:
+        stdscr.addstr(0, 0, "Operation aborted.")
+        stdscr.refresh()
+        time.sleep(2)
+    computer_texts3 = [
+        ">>> Access DENIED.",
+        ">>> ALERT! Security Breach Detected!",
+    ] 
     key = stdscr.getch()
-    if key == ord(' '):
-        return
-    
+    stdscr.refresh()
+    stdscr.clear()
+    display_computer_text(stdscr, computer_texts3, blinking=True)
+    time.sleep(3)
+    r2 = [
+        ('They’ve bugged the account.', 'Roadman'),
+        (f'{username} you need to disable security. NOW.', 'Roadman')
+    ]
+    stdscr.refresh()
+    stdscr.clear()
+    stream_text(stdscr, r2)
+
 
 
 
