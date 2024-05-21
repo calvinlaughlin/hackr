@@ -3,14 +3,22 @@ import random
 import time
 import pygame
 import subprocess
-from maze import main as maze_main
 from dialogue import stream_text, enter_name, display_computer_text, enter_account_number
 from matrix import matrix_wash, decay_from_top
+from maze import main as maze_main
+# from quick import main as quick_main
+# from pop_ups import main as pop_ups_main
+# from fallout import main as fallout_main
 from impossible import typing_puzzle
 
 import curses
 
-def new_ui(username='ANONYMOUS'):
+# GLOBAL VARS
+USERNAME = 'ANONYMOUS'
+
+# PUZZLE TEST BED
+def new_ui(stdscr, username='ANONYMOUS'):    
+    # text for the dialogue
     t1 = [
         (f'{username}, what took you so fucking long? We don’t have much time left.       ', 'Wolfe'),
         ('I’m in position. I can practically smell that vault from here.             ', 'Wolfe'),
@@ -34,18 +42,11 @@ def new_ui(username='ANONYMOUS'):
         ('Click on this link to download the mainframe, OH SHIT I downloaded a virus, help me get rid of it mate!', 'Wolfe'),
     ]
     t4 = [
-        ('', 'Wolfe'),
-        ('', 'Wolfe'),
-        ('', 'Wolfe'),
-        ('', 'Wolfe'),
+        ('blah blah blah... on to the next puzzle that tests your agility', 'Wolfe')
     ]
     t5 = [
-        ('', 'Wolfe'),
-        ('', 'Wolfe'),
-        ('', 'Wolfe'),
-        ('', 'Wolfe'),
+        ('nice job! this is the end of the puzzle test bed', 'Wolfe')
     ]
-
 
     curses.wrapper(stream_text, t1)
     curses.endwin()
@@ -56,15 +57,21 @@ def new_ui(username='ANONYMOUS'):
     curses.wrapper(stream_text, t2)
     
     subprocess.run(["python3", "fallout.py"], check=True)
+    # curses.wrapper(fallout_main)
     curses.wrapper(stream_text, t3)
     
     subprocess.run(["python3", "pop-ups.py"], check=True)
+    # curses.wrapper(pop_ups_main)
     curses.wrapper(stream_text, t4)
-    subprocess.run(["python3", "quick.py"], check=True)
-    curses.wrapper(stream_text, t5)
     
+    subprocess.run(["python3", "quick.py"], check=True)
+    # curses.wrapper(quick_main)
+    curses.wrapper(stream_text, t5)
+
+# ACT 1 - INTRO SEQUENCE
 def act1(stdscr):
     username = enter_name(stdscr)
+    USERNAME = username
     # place to add in the dialogue/flow of the storyline diego came up with
     computer_texts = [
         f">>> Welcome, Operative. Code name: {username}",
@@ -103,6 +110,8 @@ def act1(stdscr):
         ">>> Connecting to offshore account..."
     ] 
     display_computer_text(stdscr, computer_texts3)
+    
+    # TODO: fix this or make it more user friendly
     account_number = "314159265358"  # Example account number
     stdscr.clear()
     if enter_account_number(stdscr, account_number):
@@ -119,6 +128,8 @@ def act1(stdscr):
     computer_texts3 = [
         ">>> Access DENIED.",
         ">>> ALERT! Security Breach Detected!",
+        "",
+        "Press [SPACE] to continue."  
     ] 
     key = stdscr.getch()
     stdscr.refresh()
@@ -134,7 +145,7 @@ def act1(stdscr):
     stdscr.clear()
     stream_text(stdscr, r2)
     
-    # typing puzzle
+    # IMPOSSIBLE TYPING PUZZLE
     curses.wrapper(typing_puzzle)
     
     computer_texts4 = [
@@ -188,10 +199,10 @@ def act1(stdscr):
         ">>> FROM: Unknown",
         ">>> SUBJECT: Consequences.",
         ">>> MESSAGE: ",
-        f">>> {username},",
-        ">>> Your actions have led to consequences. Things you can’t come back  ",
-        ">>> from. You’ve been blacklisted from the network . All your accounts",
-        ">>> have been frozen. Trust no one. ",
+        (f">>> {username},"),
+        ">>> Your actions have led to consequences. Things you can't come back",
+        ">>> from. You've been blacklisted from the network. All your accounts",
+        ">>> have been frozen. Trust no one.",
         ">>> Good luck.",
     ]
     stdscr.refresh()
@@ -206,6 +217,17 @@ def act1(stdscr):
     display_computer_text(stdscr, computer_texts8)
     
 
+def act2(stdscr):
+    username = USERNAME
+    # TODO: make text red
+    computer_texts1 = [
+        "***this is act 2***"
+    ]
+    stdscr.refresh()
+    stdscr.clear()
+    display_computer_text(stdscr, computer_texts1)
+    
+    
 
 
 
@@ -249,15 +271,16 @@ def main(stdscr):
         elif key == curses.KEY_ENTER or key in [10, 13]:
             break
 
-    # SET TO 'TRUE' TO SEE DEVELOPMENT STORY
-    diego = True
+    # SET TO 'True' TO SEE DEVELOPMENT STORY
+    realstory = True
 
     # Execute the selected option
     if selected_idx == 0:
         matrix_wash(stdscr)
         decay_from_top(stdscr)
-        if diego:
+        if realstory:
             act1(stdscr)
+            act2(stdscr)
         else:
             username = enter_name(stdscr)
             new_ui(username)
