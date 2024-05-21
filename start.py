@@ -95,7 +95,6 @@ def act1(stdscr):
         ">>> Access granted."
     ] 
     display_computer_text(stdscr, computer_texts2, blinking=True)
-    key = stdscr.getch()
     
     r1 = [
         (f'{username}! {username}! What the fuck are you doing?!', 'Roadman'),
@@ -189,7 +188,9 @@ def act1(stdscr):
     computer_texts5 = [
         ">>> INITIATING TROJAN DEFENCE SEQUENCE.",
         ">>> TRACKING SOURCE LOCATION.",
-        ">>> TRACE INITIATED."
+        ">>> TRACE INITIATED.",
+        "",
+        "Press [SPACE] to continue."
     ]
     stdscr.refresh()
     stdscr.clear()
@@ -205,7 +206,9 @@ def act1(stdscr):
     
     computer_texts6 = [
         ">>> TRACE COMPLETE. LOCATION IDENTIFIED.",
-        ">>> DEPLOYING COUNTER-OPS..."
+        ">>> DEPLOYING COUNTER-OPS...",
+        "",
+        "Press [SPACE] to continue."
     ]
     stdscr.refresh()
     stdscr.clear()
@@ -232,6 +235,7 @@ def act1(stdscr):
         "    from. You've been blacklisted from the network. All your accounts",
         "    have been frozen. Trust no one.",
         "    Good luck.",
+        "    [SPACE]"
     ]
     stdscr.refresh()
     stdscr.clear()

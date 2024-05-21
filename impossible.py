@@ -17,7 +17,7 @@ def typing_puzzle(stdscr):
 
     # Initialize variables
     start_time = time.time()
-    timer_duration = 45
+    timer_duration = 30
     # timer_duration = 10 # For testing purposes
     input_text = ""
     code_list = [random.choice(codes) for _ in range(50)]
