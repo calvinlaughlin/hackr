@@ -87,5 +87,3 @@ def typing_puzzle(stdscr):
     stdscr.refresh()
     time.sleep(2)
     curses.curs_set(0)
-
-curses.wrapper(typing_puzzle)
