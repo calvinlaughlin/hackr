@@ -20,25 +20,25 @@ USERNAME = 'ANONYMOUS'
 def new_ui(stdscr, username='ANONYMOUS'):    
     # text for the dialogue
     t1 = [
-        (f'{username}, what took you so fucking long? We don’t have much time left.       ', 'Wolfe'),
-        ('I’m in position. I can practically smell that vault from here.             ', 'Wolfe'),
+        (f'{username}, what took you so fucking long? We don’t have much time left.', 'Wolfe'),
+        ('I’m in position. I can practically smell that vault from here.', 'Wolfe'),
         ('First thing, though, I need you to chart me a path through these air vents.', 'Wolfe'),  
-        ('I’m completely fuckin lost.                                                ', 'Wolfe'),
-        ('Get in the security panel and find me a way out of this fuckin rat maze.   ', 'Wolfe')
+        ('I’m completely fuckin lost.', 'Wolfe'),
+        ('Get in the security panel and find me a way out of this fuckin rat maze.', 'Wolfe')
     ]
     t2 = [
-        ('Ok, I’m in position.                                                                                       ', 'Wolfe'),
-        ('Waiting for a guard to pass under me… (talking to self) yeah you fuckin’ scum get outta here.              ', 'Wolfe'),
+        ('Ok, I’m in position.', 'Wolfe'),
+        ('Waiting for a guard to pass under me… (talking to self) yeah you fuckin’ scum get outta here.', 'Wolfe'),
         ('Alright I’m making my through to the server room to disable the cameras for the rest of the team to get in.', 'Wolfe'),
-        ('This place is a bloody fortress.                                                                           ', 'Wolfe'),
-        ('Shit mate, there’s a keypad here to get into the server room.                                              ', 'Wolfe'),
-        ('I need you to hack into the keypad to get me in.                                                           ', 'Wolfe'),
-        ('It looks like you’ve only got four tries.                                                                  ', 'Wolfe'),
+        ('This place is a bloody fortress.', 'Wolfe'),
+        ('Shit mate, there’s a keypad here to get into the server room.', 'Wolfe'),
+        ('I need you to hack into the keypad to get me in.', 'Wolfe'),
+        ('It looks like you’ve only got four tries.', 'Wolfe'),
     ]
     t3 = [
-        ('Alright, I’m in. Good shit working through that keypad. Now I’m in the server room.                    ', 'Wolfe'),
-        ('Let me just open this laptop…                                                                          ', 'Wolfe'),
-        ('Type the password in…                                                                                  ', 'Wolfe'),
+        ('Alright, I’m in. Good shit working through that keypad. Now I’m in the server room.', 'Wolfe'),
+        ('Let me just open this laptop…', 'Wolfe'),
+        ('Type the password in…', 'Wolfe'),
         ('Click on this link to download the mainframe, OH SHIT I downloaded a virus, help me get rid of it mate!', 'Wolfe'),
     ]
     t4 = [
