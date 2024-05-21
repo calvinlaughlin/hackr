@@ -7,12 +7,63 @@ import pygame
 pygame.init()
 pygame.mixer.init()
 
+large_letters = {
+    'A': [
+        "  ##  ",
+        " #  # ",
+        "#    #",
+        "######",
+        "#    #",
+        "#    #"
+    ],
+    'L': [
+        "#     ",
+        "#     ",
+        "#     ",
+        "#     ",
+        "#     ",
+        "######"
+    ],
+    'E': [
+        "######",
+        "#     ",
+        "##### ",
+        "#     ",
+        "#     ",
+        "######"
+    ],
+    'R': [
+        "##### ",
+        "#    #",
+        "##### ",
+        "#  #  ",
+        "#   # ",
+        "#    #"
+    ],
+    'T': [
+        "######",
+        "  ##  ",
+        "  ##  ",
+        "  ##  ",
+        "  ##  ",
+        "  ##  "
+    ],
+    ' ': [
+        "      ",
+        "      ",
+        "      ",
+        "      ",
+        "      ",
+        "      "
+    ]
+}
+
 # Load a sound (ensure you have a 'text.wav' file in your project directory)
 key_sound = pygame.mixer.Sound('text.wav')
 
 def stream_text(stdscr, messages):
     height, width = stdscr.getmaxyx()
-    
+
     for message, character in messages:
         stdscr.clear()  # Clear the screen before starting a new message
         if character:
@@ -36,8 +87,17 @@ def stream_text(stdscr, messages):
                 key_sound.play()
             time.sleep(0.03)  # Typing speed
 
-        time.sleep(1)  # Pause after each message
-    stdscr.clear()  # Clear the screen after all messages are displayed
+        stdscr.addstr(height - 1, 0, "Press SPACE to continue...")  # Prompt user to continue
+        stdscr.refresh()
+        
+        # Wait for the user to press space to continue
+        while True:
+            key = stdscr.getch()
+            if key == ord(' '):  # Check if the space key is pressed
+                break
+
+        # time.sleep(1)  # Optional pause after each message
+
 
 def display_computer_text(stdscr, texts, blinking=False):
     height, width = stdscr.getmaxyx()
@@ -140,6 +200,21 @@ def enter_name(stdscr):
     stdscr.clear()
     return name.upper()
 
+def display_large_text(stdscr, text, start_row, start_col):
+    for row_offset, line in enumerate(text):
+        for col_offset, char in enumerate(line):
+            stdscr.addch(start_row + row_offset, start_col + col_offset, char)
+
+def print_large_message(stdscr, message, start_row, start_col):
+    for char in message:
+        if char in large_letters:
+            for i, line in enumerate(large_letters[char]):
+                stdscr.addstr(start_row + i, start_col, line)
+            start_col += len(large_letters[char][0]) + 1  # Move to the next character position
+        else:
+            start_col += 6  # Arbitrary space for characters not in the dictionary
+    stdscr.refresh()
+
 def display_code_like_text(stdscr, text, y, x):
     for char in text:
         stdscr.addstr(y, x, char, curses.A_BOLD)
@@ -187,6 +262,13 @@ def enter_account_number(stdscr, account_number):
             return False
 
     return True
+
+def display_progress_bar(stdscr, progress, max_width):
+    height, width = stdscr.getmaxyx()
+    bar_width = int(progress * max_width / 100)
+    stdscr.addstr(height // 2 + 2, (width - max_width) // 2, '[' + '#' * bar_width + ' ' * (max_width - bar_width) + ']')
+    stdscr.addstr(height // 2 + 3, (width - max_width) // 2, f"Progress: {progress}%")
+    stdscr.refresh()
 
 def main(stdscr):
     # Test enter_name function

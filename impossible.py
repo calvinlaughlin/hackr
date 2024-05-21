@@ -14,7 +14,7 @@ def typing_puzzle(stdscr):
     # Initialize variables
     start_time = time.time()
     # timer_duration = 60
-    timer_duration = 1 # For testing purposes
+    timer_duration = 10 # For testing purposes
     input_text = ""
     code_list = [random.choice(codes) for _ in range(50)]
     current_code = code_list.pop(0)
@@ -69,3 +69,4 @@ def typing_puzzle(stdscr):
     stdscr.addstr(curses.LINES // 2, curses.COLS // 2 - 5, "TIME UP!")
     stdscr.refresh()
     time.sleep(2)
+    curses.curs_set(0)

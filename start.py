@@ -3,7 +3,7 @@ import random
 import time
 import pygame
 import subprocess
-from dialogue import stream_text, enter_name, display_computer_text, enter_account_number
+from dialogue import stream_text, enter_name, display_computer_text, enter_account_number, display_progress_bar, print_large_message
 from matrix import matrix_wash, decay_from_top
 from maze import main as maze_main
 # from quick import main as quick_main
@@ -70,6 +70,8 @@ def new_ui(stdscr, username='ANONYMOUS'):
 
 # ACT 1 - INTRO SEQUENCE
 def act1(stdscr):
+    height, width = stdscr.getmaxyx()
+
     username = enter_name(stdscr)
     USERNAME = username
     # place to add in the dialogue/flow of the storyline diego came up with
@@ -98,7 +100,7 @@ def act1(stdscr):
         ("You're in, this is the only chance we got.", 'Roadman'),
         ("We're monitoring your progress from HQ. No mistakes.", 'Roadman'),
         ('@Bla3kH4wk and @AlexeiX, you two access the financial records.', 'Roadman'),
-        (f'{username}, begin the transfer protocol.', 'Roadman')
+        (f'{username}, press [SPACE] to begin the transfer protocol.', 'Roadman')
     ]
     stream_text(stdscr, r1)
     stdscr.clear()
@@ -113,7 +115,6 @@ def act1(stdscr):
     
     # TODO: fix this or make it more user friendly
     account_number = "314159265358"  # Example account number
-    stdscr.clear()
     if enter_account_number(stdscr, account_number):
         stdscr.clear()
         final_texts = [
@@ -121,21 +122,37 @@ def act1(stdscr):
             ">>> Transfer in progress..."
         ]
         display_computer_text(stdscr, final_texts)
+        max_width = 50  # Width of the progress bar
+        for progress in range(100):
+            if progress >= 99:
+                progress = 99  # Stop at 99%
+                time.sleep(5)
+            display_progress_bar(stdscr, progress, max_width)
+            time.sleep(0.05)  # Control the speed of the progress bar
     else:
         stdscr.addstr(0, 0, "Operation aborted.")
         stdscr.refresh()
         time.sleep(2)
     computer_texts3 = [
         ">>> Access DENIED.",
-        ">>> ALERT! Security Breach Detected!",
+        ">>> Security Breach Detected!",
         "",
         "Press [SPACE] to continue."  
     ] 
-    key = stdscr.getch()
+    message = "ALERT"
+    start_row = 2
+    start_col = 10
     stdscr.refresh()
     stdscr.clear()
-    display_computer_text(stdscr, computer_texts3, blinking=True)
-    time.sleep(3)
+    print_large_message(stdscr, message, start_row, start_col)
+    stdscr.refresh()
+
+    display_computer_text(stdscr, computer_texts3)
+
+    while True:
+        key = stdscr.getch()
+        if key == ord(' '):
+            break
     
     r2 = [
         ("They've bugged the account.", 'Roadman'),
@@ -146,7 +163,9 @@ def act1(stdscr):
     stream_text(stdscr, r2)
     
     # IMPOSSIBLE TYPING PUZZLE
-    curses.wrapper(typing_puzzle)
+    stdscr.refresh()
+    stdscr.clear()
+    typing_puzzle(stdscr)
     
     computer_texts4 = [
         ">>> Countermeasures engaged. Shutting down Connection."
@@ -154,6 +173,7 @@ def act1(stdscr):
     stdscr.refresh()
     stdscr.clear()
     display_computer_text(stdscr, computer_texts4)
+    key = stdscr.getch()
     
     r3 = [
         (f"For fucks sake {username}, what's happening. I thought you were supposed to be good.", 'Roadman'),
@@ -172,6 +192,7 @@ def act1(stdscr):
     stdscr.refresh()
     stdscr.clear()
     display_computer_text(stdscr, computer_texts5)
+    key = stdscr.getch()
     
     r4 = [
         (f"Shit, it's too late. You need to wipe your computer and disappear.", 'Roadman')
@@ -179,6 +200,7 @@ def act1(stdscr):
     stdscr.refresh()
     stdscr.clear()
     stream_text(stdscr, r4)
+    key = stdscr.getch()
     
     computer_texts6 = [
         ">>> TRACE COMPLETE. LOCATION IDENTIFIED.",
@@ -187,6 +209,7 @@ def act1(stdscr):
     stdscr.refresh()
     stdscr.clear()
     display_computer_text(stdscr, computer_texts6)
+    key = stdscr.getch()
     
     r5 = [
         (f"They've got us too. We're compromised. Go dark. You’re on your own now.", 'Roadman')
@@ -194,20 +217,22 @@ def act1(stdscr):
     stdscr.refresh()
     stdscr.clear()
     stream_text(stdscr, r5)
+    key = stdscr.getch()
     
     computer_texts7 = [
         ">>> FROM: Unknown",
         ">>> SUBJECT: Consequences.",
         ">>> MESSAGE: ",
         (f">>> {username},"),
-        ">>> Your actions have led to consequences. Things you can't come back",
-        ">>> from. You've been blacklisted from the network. All your accounts",
-        ">>> have been frozen. Trust no one.",
-        ">>> Good luck.",
+        "    Your actions have led to consequences. Things you can't come back",
+        "    from. You've been blacklisted from the network. All your accounts",
+        "    have been frozen. Trust no one.",
+        "    Good luck.",
     ]
     stdscr.refresh()
     stdscr.clear()
     display_computer_text(stdscr, computer_texts7)
+    key = stdscr.getch()
     
     computer_texts8 = [
         "[CHECKPOINT REACHED]"
@@ -215,6 +240,11 @@ def act1(stdscr):
     stdscr.refresh()
     stdscr.clear()
     display_computer_text(stdscr, computer_texts8)
+    key = stdscr.getch()
+    while True:
+        key = stdscr.getch()
+        if key == ' ':
+            break
     
 
 def act2(stdscr):
