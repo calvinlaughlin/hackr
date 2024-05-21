@@ -67,14 +67,15 @@ def new_ui(stdscr, username='ANONYMOUS'):
     subprocess.run(["python3", "quick.py"], check=True)
     # curses.wrapper(quick_main)
     curses.wrapper(stream_text, t5)
-
-# ACT 1 - INTRO SEQUENCE
+#-------------------------------------------------------------------------------------------------#
+# ACT 1 - INTRO SEQUENCE                                                                          #
+#-------------------------------------------------------------------------------------------------#
 def act1(stdscr):
     height, width = stdscr.getmaxyx()
 
     username = enter_name(stdscr)
     USERNAME = username
-    # place to add in the dialogue/flow of the storyline diego came up with
+
     computer_texts = [
         f">>> Welcome, Operative. Code name: {username}",
         ">>> Mission: Heist Protocol - Operation Monaco",
@@ -94,6 +95,7 @@ def act1(stdscr):
         ">>> Access granted."
     ] 
     display_computer_text(stdscr, computer_texts2, blinking=True)
+    key = stdscr.getch()
     
     r1 = [
         (f'{username}! {username}! What the fuck are you doing?!', 'Roadman'),
@@ -200,7 +202,6 @@ def act1(stdscr):
     stdscr.refresh()
     stdscr.clear()
     stream_text(stdscr, r4)
-    key = stdscr.getch()
     
     computer_texts6 = [
         ">>> TRACE COMPLETE. LOCATION IDENTIFIED.",
@@ -217,7 +218,10 @@ def act1(stdscr):
     stdscr.refresh()
     stdscr.clear()
     stream_text(stdscr, r5)
-    key = stdscr.getch()
+
+    matrix_wash(stdscr)
+    decay_from_top(stdscr)
+    time.sleep(2)
     
     computer_texts7 = [
         ">>> FROM: Unknown",

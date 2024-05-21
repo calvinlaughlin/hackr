@@ -122,6 +122,9 @@ def display_computer_text(stdscr, texts, blinking=False):
                     stdscr.addstr(y + i, x, " " * len(texts[i]))
                     stdscr.refresh()
                     time.sleep(0.5)
+                # Ensure the text is shown at the end without blink
+                stdscr.addstr(y + i, x, texts[i], curses.A_BOLD)
+                stdscr.refresh()
             else:
                 stdscr.addstr(y + i, x, texts[i], curses.A_BOLD)
                 stdscr.refresh()
@@ -258,8 +261,12 @@ def enter_account_number(stdscr, account_number):
         elif key == 10:  # Enter key
             if input_number == account_number:
                 break
-        elif key == 27:  # Escape key to exit
-            return False
+        elif key in (8, 127):  # Backspace key
+            if len(input_number) > 0:
+                stdscr.addstr(y, x + len(prompt) + len(input_number) - 1, ' ')
+                input_number = input_number[:-1]
+                stdscr.move(y, x + len(prompt) + len(input_number))
+                stdscr.refresh()
 
     return True
 
