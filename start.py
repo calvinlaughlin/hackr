@@ -344,7 +344,8 @@ def main(stdscr):
     curses.init_pair(1, curses.COLOR_WHITE, curses.COLOR_BLACK)
 
     selected_idx = 0
-    options = ["Start", "Options"]
+    # options = ["Start", "Options"]
+    options = ["Start", "Skip to Act II", "Skip to Act III", "Skip to Act IV", "Options"]
 
     while True:
         stdscr.clear()
@@ -375,21 +376,22 @@ def main(stdscr):
         elif key == curses.KEY_ENTER or key in [10, 13]:
             break
 
-    # SET TO 'True' TO SEE DEVELOPMENT STORY
-    realstory = True
 
-    # Execute the selected option
-    if selected_idx == 0:
-        matrix_wash(stdscr)
-        decay_from_top(stdscr)
-        if realstory:
-            act1(stdscr)
-            act2(stdscr)
-        else:
-            username = enter_name(stdscr)
-            new_ui(username)
-    elif selected_idx == 1:
-        pass
+
+
+    
+    matrix_wash(stdscr)
+    decay_from_top(stdscr)
+    if selected_idx == 0: 
+        act1(stdscr)
+        act2(stdscr)
+    else: 
+        username = enter_name(stdscr)
+        USERNAME = username
+
+        if selected_idx == 1: 
+            act2(stdscr, username)
+        
 
 if __name__ == "__main__":
     curses.wrapper(main)
