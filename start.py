@@ -100,11 +100,7 @@ def act1(stdscr):
     # prompt user if they would like to call him road or roadman
     
     r1 = [
-<<<<<<< Updated upstream
         (f'{username}! What took you so fucking long?', 'Roadman'),
-=======
-        (f'{username}! What took you so long?!', 'Roadman'),
->>>>>>> Stashed changes
         ("You're in, this is the only chance we got.", 'Roadman'),
         ("This cat is running ArmorSafe v2. It's strong, but its not unbreakable!", 'Roadman'),
         ('@Bla3kH4wk and @AlexeiX, you two access the financial records.', 'Roadman'),
@@ -177,13 +173,8 @@ def act1(stdscr):
     key = stdscr.getch()
     
     r3 = [
-<<<<<<< Updated upstream
-        (f"For fucks sake {username}, what's happening?! I thought you were supposed to be good.", 'Roadman'),
-        ("Abort! Get out of there NOW!", 'Roadman')
-=======
         (f"For fucks sake {username}, what's happening? I thought you were supposed to be good.", 'Roadman'),
         ("Abort! Get out of there now! We're cooked.", 'Roadman')
->>>>>>> Stashed changes
     ]
     stdscr.refresh()
     stdscr.clear()
