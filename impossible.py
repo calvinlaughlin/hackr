@@ -3,7 +3,13 @@ import random
 import time
 
 # List of random codes
-codes = ["alpha", "bravo", "charlie", "delta", "echo", "foxtrot", "golf", "hotel", "india", "juliet", "kilo", "lima", "mike", "november", "oscar", "papa", "quebec", "romeo", "sierra", "tango", "uniform", "victor", "whiskey", "xray", "yankee"]
+dog_names = [
+    "bella", "max", "luna", "charlie", "lucy", "cooper", "bailey", "daisy", "sadie", "molly",
+    "buddy", "rocky", "maggie", "sophie", "zoey", "chloe", "harley", "rosie", "lola", "roxy",
+    "buster", "gracie", "duke", "jack", "teddy", "bentley", "jake", "ruby", "sasha", "jax",
+    "stella", "penny", "zoe", "tucker", "oscar", "willow", "murphy", "ginger", "riley", "gizmo",
+    "baxter", "lilly", "dexter", "coco", "finn", "nala", "shadow", "kona", "marley", "scout"
+]
 
 # List of random ASCII characters for decaying effect
 ascii_chars = ['@', '#', '$', '%', '&', '*', '!', '?', '~']
@@ -20,7 +26,8 @@ def typing_puzzle(stdscr):
     timer_duration = 30
     # timer_duration = 10 # For testing purposes
     input_text = ""
-    code_list = [random.choice(codes) for _ in range(50)]
+    # code_list = [random.choice(dog_names) for _ in range(50)]
+    code_list = dog_names
     current_code = code_list.pop(0)
     decay_positions = []
 
@@ -67,7 +74,7 @@ def typing_puzzle(stdscr):
         except:
             continue
         
-        if key == '\n':
+        if key == ' ':
             # Check if input text matches current code
             if input_text == current_code and code_list:
                 current_code = code_list.pop(0)

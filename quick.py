@@ -2,14 +2,13 @@ import curses
 import time
 import random
 
-def main(stdscr):
+def bar_game(stdscr):
     curses.curs_set(0)
     stdscr.nodelay(1)
     stdscr.timeout(100)
 
     levels = 10
     start = 0.01
-
     num_tries = 0
 
     while True:
@@ -31,6 +30,12 @@ def main(stdscr):
                     stdscr.addstr(i, 0, "#" + "-" * 14 + "|" + "-" * 14 + "#")
                     stdscr.addstr(i, targets[i], "X")
 
+            # Calculate and draw the progress bar
+            progress = int((current_level / levels) * 30)
+            percentage = int((current_level / levels) * 100)
+            progress_bar = "Progress: [" + "#" * progress + "-" * (30 - progress) + "] " + f"{percentage}%"
+            stdscr.addstr(levels + 1, 0, progress_bar)
+
             stdscr.refresh()
 
             key = stdscr.getch()
@@ -51,21 +56,20 @@ def main(stdscr):
                 directions[current_level] *= -1
 
         if current_level == levels:
-            stdscr.addstr(levels, 0, "You Win! Press 'x' to exit or 'r' to restart.")
+            stdscr.addstr(levels + 2, 0, "CONNECTED! Press SPACE to transfer ALL FUNDS. ")
+            stdscr.addstr(levels + 3, 0, "Current balance: $40,203,679,829.72")
             stdscr.refresh()
             while True:
                 key = stdscr.getch()
-                if key == ord('x'):
-                    return
-                elif key == ord('r'):
+                if key == ord(' '):
                     break
+            return
         else:
             num_tries += 1
-            stdscr.addstr(levels, 0, f"Press SPACE to try again. Tries: {num_tries}")
+            stdscr.addstr(levels + 2, 0, f"Press SPACE to try again. Tries: {num_tries}")
             stdscr.refresh()
             while True:
                 key = stdscr.getch()
                 if key == ord(' '):
                     break
 
-curses.wrapper(main)

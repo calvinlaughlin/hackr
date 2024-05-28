@@ -6,9 +6,10 @@ import subprocess
 from dialogue import stream_text, enter_name, display_computer_text, enter_account_number, display_progress_bar, print_large_message
 from matrix import matrix_wash, decay_from_top
 from maze import main as maze_main
+from quick import bar_game
 # from quick import main as quick_main
 # from pop_ups import main as pop_ups_main
-# from fallout import main as fallout_main
+from fallout import main as fallout_main
 from impossible import typing_puzzle
 
 import curses
@@ -97,9 +98,9 @@ def act1(stdscr):
     display_computer_text(stdscr, computer_texts2, blinking=True)
     
     r1 = [
-        (f'{username}! {username}! What the fuck are you doing?!', 'Roadman'),
+        (f'{username}! What took you so fucking long?', 'Roadman'),
         ("You're in, this is the only chance we got.", 'Roadman'),
-        ("We're monitoring your progress from HQ. No mistakes.", 'Roadman'),
+        ("This cat is running ArmorSafe v2. It's strong, but its not unbreakable!", 'Roadman'),
         ('@Bla3kH4wk and @AlexeiX, you two access the financial records.', 'Roadman'),
         (f'{username}, press [SPACE] to begin the transfer protocol.', 'Roadman')
     ]
@@ -109,31 +110,21 @@ def act1(stdscr):
     computer_texts3 = [
         ">>> Accessing financial records...",
         "",
-        ">>> Access granted.",
-        ">>> Connecting to offshore account..."
+        "ERROR: Please align access ports now."
     ] 
     display_computer_text(stdscr, computer_texts3)
+
+    bar_game(stdscr)
+
+    # max_width = 50  # Width of the progress bar
+    # for progress in range(100):
+    #     if progress >= 99:
+    #         progress = 99  # Stop at 99%
+    #         time.sleep(5)
+    #     display_progress_bar(stdscr, progress, max_width)
+    #     time.sleep(0.05)  # Control the speed of the progress bar
     
-    # TODO: fix this or make it more user friendly
-    account_number = "314159265358"  # Example account number
-    if enter_account_number(stdscr, account_number):
-        stdscr.clear()
-        final_texts = [
-            ">>> Account number verified.",
-            ">>> Transfer in progress..."
-        ]
-        display_computer_text(stdscr, final_texts)
-        max_width = 50  # Width of the progress bar
-        for progress in range(100):
-            if progress >= 99:
-                progress = 99  # Stop at 99%
-                time.sleep(5)
-            display_progress_bar(stdscr, progress, max_width)
-            time.sleep(0.05)  # Control the speed of the progress bar
-    else:
-        stdscr.addstr(0, 0, "Operation aborted.")
-        stdscr.refresh()
-        time.sleep(2)
+
     computer_texts3 = [
         ">>> Access DENIED.",
         ">>> Security Breach Detected!",
@@ -141,7 +132,7 @@ def act1(stdscr):
         "Press [SPACE] to continue."  
     ] 
     message = "ALERT"
-    start_row = 2
+    start_row = 1
     start_col = 10
     stdscr.refresh()
     stdscr.clear()
@@ -156,8 +147,11 @@ def act1(stdscr):
             break
     
     r2 = [
-        ("They've bugged the account.", 'Roadman'),
-        (f'{username} you need to disable security. NOW.', 'Roadman')
+        ("Ah, shit. They bugged the account. This is REALLY bad.", 'Roadman'),
+        (f'{username}, the only way to avoid getting shut down is by guessing the security question.', 'Roadman'),
+        (f"Looks like the question was 'childhood dog name'. I've assembled a list of 50 most common dog names.", 'Roadman'),
+        (f"Type 'em in as fast as you can. If the timer expires before you succeed, it's all over.", 'Roadman'),
+        (f"We're all counting on you.", 'Roadman')
     ]
     stdscr.refresh()
     stdscr.clear()
@@ -177,8 +171,8 @@ def act1(stdscr):
     key = stdscr.getch()
     
     r3 = [
-        (f"For fucks sake {username}, what's happening. I thought you were supposed to be good.", 'Roadman'),
-        ("Abort! Get out of there now! We're cooked.", 'Roadman')
+        (f"For fucks sake {username}, what's happening?! I thought you were supposed to be good.", 'Roadman'),
+        ("Abort! Get out of there NOW!", 'Roadman')
     ]
     stdscr.refresh()
     stdscr.clear()
@@ -216,7 +210,7 @@ def act1(stdscr):
     key = stdscr.getch()
     
     r5 = [
-        (f"They've got us too. We're compromised. Go dark. You’re on your own now.", 'Roadman')
+        (f"You're on your own now, {username}. Lay low. Get the hell outta dodge.", 'Roadman')
     ]
     stdscr.refresh()
     stdscr.clear()
@@ -231,10 +225,11 @@ def act1(stdscr):
         ">>> SUBJECT: Consequences.",
         ">>> MESSAGE: ",
         (f">>> {username},"),
-        "    Your actions have led to consequences. Things you can't come back",
-        "    from. You've been blacklisted from the network. All your accounts",
-        "    have been frozen. Trust no one.",
-        "    Good luck.",
+        "    You have long been an esteemed member of our organization. However,",
+        "    after your actions in Operation Monaco, we are forced to officially",
+        "    cut our ties with you. Your accounts have been frozen and your membership",
+        "    is revoked. We suggest you disappear. Now.",
+        "    Thank you for your contributions. Goodbye.",
         "    [SPACE]"
     ]
     stdscr.refresh()
@@ -249,23 +244,92 @@ def act1(stdscr):
     stdscr.clear()
     display_computer_text(stdscr, computer_texts8)
     key = stdscr.getch()
-    while True:
-        key = stdscr.getch()
-        if key == ' ':
-            break
+
+    # BEGIN ACT 2
+    act2(stdscr, username)
     
 
-def act2(stdscr):
-    username = USERNAME
+def act2(stdscr, username):
     # TODO: make text red
-    computer_texts1 = [
-        "***this is act 2***"
+    intro = [
+        ">>> Location: Cuba",
+        ">>> Date: 08/20/1997",
+        ">>> Time: 2221 Hours",
+        "",
+        ">>> 6 months after OPERATION MONACO",
+        "[SPACE]"
     ]
-    stdscr.refresh()
-    stdscr.clear()
-    display_computer_text(stdscr, computer_texts1)
+    display_computer_text(stdscr, intro)
+    key = stdscr.getch()
+
+    hello = [
+        f">>> Welcome, Operative. Code name: {username}",
+        ">>> Status: Blacklisted",
+        ">>> Objective: Survive and Locate Allies",
+        "",
+        "[SPACE]"
+    ]
+    display_computer_text(stdscr, hello)
+    key = stdscr.getch()
+
+    log1 = [
+        ("#431: I can't keep operating on this server. If I want to continue hacking, I need a new one.", "[USER LOG]"),
+        ("I just have to find one.", "[USER LOG]"),
+        ("Hoping to finally contact the GATEKEEPER once I'm running again.", "[USER LOG]"),
+        ("Going to attempt a server search. It's the only way.", "[USER LOG]")
+    ]
+    stream_text(stdscr, log1)
+
+    mz1 = [
+        f">>> Initiating M.A.Z.E. protocol",
+        ">>> Avoid surveillance traps and dead ends",
+        "[SPACE] to begin protocol"
+    ]
+    display_computer_text(stdscr, mz1)
+    key = stdscr.getch()
+
+    maze_main(stdscr)
+
+    mz1 = [
+        ">>> SECURE SERVER OBTAINED.",
+        ">>> Encryption: SHA-256"
+    ]
+    display_computer_text(stdscr, mz1)
+    key = stdscr.getch()
     
-    
+    log2 = [
+        ("#432: Found an open server on the dark web. Only problem is it's still encrypted.", "[USER LOG]"),
+        ("What's worse, my computer is beat up, barely holding together, but it'll have to do.", "[USER LOG]"),
+        ("Going to have to crack it if I want to use it.", "[USER LOG]"),
+        ("No room for errors, either. If I fail, I have to keep looking for another opening.", "[USER LOG]"),
+        ("Here goes nothing.", "[USER LOG]")
+    ]
+    stream_text(stdscr, log2)
+
+    fall = [
+        ">>> Cracking the terminal...",
+        ">>> ENTER PASSWORD. You have 4 attempts remaining."
+    ]
+    display_computer_text(stdscr, fall)
+    key = stdscr.getch()
+
+    fallout_main(stdscr)
+
+    fall2 = [
+        ">>> Password accepted.",
+        ">>> ACCESS GRANTED."
+    ]
+    display_computer_text(stdscr, fall2, blinking=True)
+    key = stdscr.getch()
+
+    log3 = [
+        ("#433: Fuck yeah. I'm in.", "[USER LOG]"),
+        ("I'm confident I can access the GATEKEEPER from here", "[USER LOG]"),
+        ("Going to have to crack it if I want to use it.", "[USER LOG]"),
+        ("No room for errors, either. If I fail, I have to keep looking for another opening.", "[USER LOG]"),
+        ("Here goes nothing.", "[USER LOG]")
+    ]
+    stream_text(stdscr, log3)
 
 
 

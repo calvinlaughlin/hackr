@@ -92,4 +92,3 @@ def main(stdscr):
     correct_word = random.choice(clean_words)
     game_loop(stdscr, gibberish_words, clean_words, correct_word)
 
-curses.wrapper(main)
