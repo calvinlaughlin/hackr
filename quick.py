@@ -77,6 +77,10 @@ def bar_game(stdscr):
                 key = stdscr.getch()
                 if key == ord(' '):
                     break
+            # Clear only the right half of the screen where the game is drawn
+            for row in range(start_row, start_row + levels + 4):
+                stdscr.move(row, start_col_progress)
+                stdscr.clrtoeol()
             return
         else:
             num_tries += 1
