@@ -65,27 +65,46 @@ def stream_text(stdscr, messages):
     height, width = stdscr.getmaxyx()
 
     for message, character in messages:
-        stdscr.clear()  # Clear the screen before starting a new message
+        # Clear only the bottom left half of the screen
+        static_row = height // 2 + 4
+        label_col = 2
+        clear_start_row = static_row
+        clear_end_row = height - 1
+        clear_start_col = 0
+        clear_end_col = width // 2
+
+        for row in range(clear_start_row - 1, height):
+            stdscr.move(row, clear_start_col)
+            stdscr.clrtoeol()
+
         if character:
             label_text = f"{character.upper()}: "
-            static_row = height // 2
-            label_col = 10
-            stdscr.addstr(static_row, label_col, label_text, curses.A_BOLD)
         else:
-            static_row = height // 2
-            label_col = 10
+            label_text = ''
 
-        message_col = label_col + len(label_text if character else '')
+        if label_text:
+            stdscr.addstr(static_row, label_col, label_text, curses.A_BOLD)
+            message_col = label_col + len(label_text)
+        else:
+            message_col = label_col
 
         stdscr.refresh()  # Refresh after setting up labels and before typing starts
 
         # Print each character with a sound effect at a random chance
-        for i, char in enumerate(message):
-            stdscr.addch(static_row + 1, message_col + i, char)  # Place each character
+        current_row = static_row + 1
+        current_col = message_col
+        for char in message:
+            if current_col >= width // 2:  # Wrap text if it goes past half the screen width
+                current_row += 1
+                current_col = label_col
+            
+            stdscr.addch(current_row, current_col, char)  # Place each character
             stdscr.refresh()  # Refresh after each character to see the typing effect
             if random.random() < 0.25:  # Play sound with some probability
                 key_sound.play()
             time.sleep(0.03)  # Typing speed
+            
+            current_col += 1  # Move to the next column
 
         stdscr.addstr(height - 1, 0, "Press SPACE to continue...")  # Prompt user to continue
         stdscr.refresh()
@@ -96,14 +115,24 @@ def stream_text(stdscr, messages):
             if key == ord(' '):  # Check if the space key is pressed
                 break
 
-        # time.sleep(1)  # Optional pause after each message
+        for row in range(clear_start_row - 1, height):
+            stdscr.move(row, clear_start_col)
+            stdscr.clrtoeol()
+
+        # Optional pause after each message
+        # time.sleep(1)
 
 
-def display_computer_text(stdscr, texts, blinking=False):
+def display_computer_text(stdscr, texts, blinking=False, autocomplete=False):
     height, width = stdscr.getmaxyx()
     midpoint_y = height // 2
     y = midpoint_y // 2
     x = 10  # 2 spaces padding from the right edge
+
+    # Clear the specific area where text was displayed
+    for i in range(midpoint_y):
+        stdscr.move(y + i, x)
+        stdscr.clrtoeol()
 
     stdscr.nodelay(True)  # Make getch non-blocking
 
@@ -129,6 +158,14 @@ def display_computer_text(stdscr, texts, blinking=False):
                 stdscr.addstr(y + i, x, texts[i], curses.A_BOLD)
                 stdscr.refresh()
     
+    if not autocomplete:
+        # Wait for user to press SPACE
+        while True:
+            key = stdscr.getch()
+            if key == ord(' '):
+                break
+
+    stdscr.refresh()
     stdscr.nodelay(False)
 
 def enter_name(stdscr):

@@ -86,14 +86,12 @@ def act1(stdscr):
         "Press [SPACE] to continue."
     ] 
     display_computer_text(stdscr, computer_texts)
-    key = stdscr.getch()
     
-    stdscr.clear()
     computer_texts2 = [
         ">>> Initiating connection to Server...",
         ">>> Establishing secure link...",
         "",
-        ">>> Access granted."
+        ">>> Access granted. [SPACE]"
     ] 
     display_computer_text(stdscr, computer_texts2, blinking=True)
 
@@ -107,14 +105,13 @@ def act1(stdscr):
         (f'{username}, press [SPACE] to begin the transfer protocol.', 'Roadman')
     ]
     stream_text(stdscr, r1)
-    stdscr.clear()
     
     computer_texts3 = [
         ">>> Accessing financial records...",
         "",
-        "ERROR: Please align access ports now."
+        "ERROR: Press [SPACE] to align access ports now."
     ] 
-    display_computer_text(stdscr, computer_texts3)
+    display_computer_text(stdscr, computer_texts3, autocomplete=False)
 
     bar_game(stdscr)
 
@@ -133,20 +130,15 @@ def act1(stdscr):
         "",
         "Press [SPACE] to continue."  
     ] 
-    message = "ALERT"
-    start_row = 1
-    start_col = 10
-    stdscr.refresh()
-    stdscr.clear()
-    print_large_message(stdscr, message, start_row, start_col)
-    stdscr.refresh()
+    # message = "ALERT"
+    # start_row = 1
+    # start_col = 10
+    # stdscr.refresh()
+    # stdscr.clear()
+    # print_large_message(stdscr, message, start_row, start_col)
+    # stdscr.refresh()
 
     display_computer_text(stdscr, computer_texts3)
-
-    while True:
-        key = stdscr.getch()
-        if key == ord(' '):
-            break
     
     r2 = [
         ("Ah, shit. They bugged the account. This is REALLY bad.", 'Roadman'),
@@ -156,7 +148,6 @@ def act1(stdscr):
         (f"We're all counting on you.", 'Roadman')
     ]
     stdscr.refresh()
-    stdscr.clear()
     stream_text(stdscr, r2)
     
     # IMPOSSIBLE TYPING PUZZLE
@@ -168,16 +159,13 @@ def act1(stdscr):
         ">>> Countermeasures engaged. Shutting down Connection."
     ] 
     stdscr.refresh()
-    stdscr.clear()
     display_computer_text(stdscr, computer_texts4)
-    key = stdscr.getch()
     
     r3 = [
         (f"For fucks sake {username}, what's happening? I thought you were supposed to be good.", 'Roadman'),
         ("Abort! Get out of there now! We're cooked.", 'Roadman')
     ]
     stdscr.refresh()
-    stdscr.clear()
     stream_text(stdscr, r3)
     
     # TODO: make text red
@@ -189,15 +177,11 @@ def act1(stdscr):
         "Press [SPACE] to continue."
     ]
     stdscr.refresh()
-    stdscr.clear()
     display_computer_text(stdscr, computer_texts5)
-    key = stdscr.getch()
     
     r4 = [
         (f"Shit, it's too late. You need to wipe your computer and disappear.", 'Roadman')
     ]
-    stdscr.refresh()
-    stdscr.clear()
     stream_text(stdscr, r4)
     
     computer_texts6 = [
@@ -206,16 +190,11 @@ def act1(stdscr):
         "",
         "Press [SPACE] to continue."
     ]
-    stdscr.refresh()
-    stdscr.clear()
     display_computer_text(stdscr, computer_texts6)
-    key = stdscr.getch()
     
     r5 = [
         (f"You're on your own now, {username}. Lay low. Get the hell outta dodge.", 'Roadman')
     ]
-    stdscr.refresh()
-    stdscr.clear()
     stream_text(stdscr, r5)
 
     matrix_wash(stdscr)
@@ -234,25 +213,23 @@ def act1(stdscr):
         "    Thank you for your contributions. Goodbye.",
         "    [SPACE]"
     ]
-    stdscr.refresh()
-    stdscr.clear()
     display_computer_text(stdscr, computer_texts7)
-    key = stdscr.getch()
     
     computer_texts8 = [
         "[CHECKPOINT REACHED]"
     ]
-    stdscr.refresh()
-    stdscr.clear()
     display_computer_text(stdscr, computer_texts8)
-    key = stdscr.getch()
 
     # BEGIN ACT 2
     act2(stdscr, username)
     
 
+#-------------------------------------------------------------------------------------------------#
+# ACT 2 - CUBA REDEMPTION                                                                         #
+#-------------------------------------------------------------------------------------------------#
 def act2(stdscr, username):
     # TODO: make text red
+    stdscr.clear()
     intro = [
         ">>> Location: Cuba",
         ">>> Date: 08/20/1997",
@@ -262,8 +239,7 @@ def act2(stdscr, username):
         "[SPACE]"
     ]
     display_computer_text(stdscr, intro)
-    key = stdscr.getch()
-
+    
     hello = [
         f">>> Welcome, Operative. Code name: {username}",
         ">>> Status: Blacklisted",
@@ -272,7 +248,6 @@ def act2(stdscr, username):
         "[SPACE]"
     ]
     display_computer_text(stdscr, hello)
-    key = stdscr.getch()
 
     log1 = [
         ("#431: I can't keep operating on this server. If I want to continue hacking, I need a new one.", "[USER LOG]"),
@@ -288,7 +263,6 @@ def act2(stdscr, username):
         "[SPACE] to begin protocol"
     ]
     display_computer_text(stdscr, mz1)
-    key = stdscr.getch()
 
     maze_main(stdscr)
 
@@ -297,7 +271,6 @@ def act2(stdscr, username):
         ">>> Encryption: SHA-256"
     ]
     display_computer_text(stdscr, mz1)
-    key = stdscr.getch()
     
     log2 = [
         ("#432: Found an open server on the dark web. Only problem is it's still encrypted.", "[USER LOG]"),
@@ -313,7 +286,6 @@ def act2(stdscr, username):
         ">>> ENTER PASSWORD. You have 4 attempts remaining."
     ]
     display_computer_text(stdscr, fall)
-    key = stdscr.getch()
 
     fallout_main(stdscr)
 
@@ -322,7 +294,6 @@ def act2(stdscr, username):
         ">>> ACCESS GRANTED."
     ]
     display_computer_text(stdscr, fall2, blinking=True)
-    key = stdscr.getch()
 
     log3 = [
         ("#433: Fuck yeah. I'm in.", "[USER LOG]"),
