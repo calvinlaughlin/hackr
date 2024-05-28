@@ -4,15 +4,30 @@ import time
 
 # List of random codes
 dog_names = [
+<<<<<<< Updated upstream
     "bella", "max", "luna", "charlie", "lucy", "cooper", "bailey", "daisy", "sadie", "molly",
     "buddy", "rocky", "maggie", "sophie", "zoey", "chloe", "harley", "rosie", "lola", "roxy",
     "buster", "gracie", "duke", "jack", "teddy", "bentley", "jake", "ruby", "sasha", "jax",
     "stella", "penny", "zoe", "tucker", "oscar", "willow", "murphy", "ginger", "riley", "gizmo",
     "baxter", "lilly", "dexter", "coco", "finn", "nala", "shadow", "kona", "marley", "scout"
+=======
+    "Bella", "Max", "Luna", "Charlie", "Lucy",
+    "Cooper", "Daisy", "Milo", "Lola", "Rocky",
+    "Zoe", "Buddy", "Bailey", "Sadie", "Tucker",
+    "Maggie", "Bear", "Sophie", "Duke", "Chloe",
+    "Jack", "Stella", "Oliver", "Roxy", "Teddy",
+    "Rosie", "Bentley", "Ruby", "Toby", "Piper",
+    "Winston", "Penny", "Leo", "Ellie", "Finn",
+    "Lilly", "Bruno", "Mia", "Jax", "Abby",
+    "Louie", "Harley", "Nala", "Henry", "Izzy",
+    "Cody", "Ginger", "Dexter", "Rocco", "Belle"
+>>>>>>> Stashed changes
 ]
 
 # List of random ASCII characters for decaying effect
 ascii_chars = ['@', '#', '$', '%', '&', '*', '!', '?', '~']
+
+wrong = ["Wrong!", "Not that one!", "Nope!", "Again!", "Nah", "Not the right one.", "I regret to inform you that you have chosen wrong.", "Keep going."]
 
 def typing_puzzle(stdscr):
     # Setup curses
@@ -26,10 +41,15 @@ def typing_puzzle(stdscr):
     timer_duration = 30
     # timer_duration = 10 # For testing purposes
     input_text = ""
+<<<<<<< Updated upstream
     # code_list = [random.choice(dog_names) for _ in range(50)]
     code_list = dog_names
+=======
+    code_list = [random.choice(dog_names).lower() for _ in range(50)]
+>>>>>>> Stashed changes
     current_code = code_list.pop(0)
     decay_positions = []
+    wrong_message = ""
 
     while True:
         # Calculate remaining time
@@ -52,6 +72,11 @@ def typing_puzzle(stdscr):
         
         # Display input text
         stdscr.addstr(4, curses.COLS // 2 - len(input_text) // 2, input_text)
+        
+        # Display wrong message
+        if wrong_message:
+            stdscr.addstr(7, curses.COLS // 2 - len("ROADMAN") - 8 // 2, "ROADMAN")
+            stdscr.addstr(8, curses.COLS // 2 - len(wrong_message) // 2, wrong_message)
         
         # Calculate decay probability (exponential increase as time runs out)
         decay_probability = (1 - remaining_time / timer_duration) ** 3
@@ -78,6 +103,7 @@ def typing_puzzle(stdscr):
             # Check if input text matches current code
             if input_text == current_code and code_list:
                 current_code = code_list.pop(0)
+                wrong_message = wrong[random.randint(0, len(wrong) - 1)]
             input_text = ""
         elif key == '\b' or key == '\x7f':  # Handle backspace
             input_text = input_text[:-1]
@@ -94,3 +120,5 @@ def typing_puzzle(stdscr):
     stdscr.refresh()
     time.sleep(2)
     curses.curs_set(0)
+
+curses.wrapper(typing_puzzle)
