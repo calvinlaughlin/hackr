@@ -81,7 +81,7 @@ def typing_puzzle(stdscr):
         except:
             continue
         
-        if key == curses.KEY_ENTER:
+        if key == '\n' or key == '\r':
             # Check if input text matches current code
             if input_text == current_code and code_list:
                 current_code = code_list.pop(0)
