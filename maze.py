@@ -484,6 +484,7 @@ def main(stdscr):
             stdscr.getch()
             # this could be sys.exit(100) to exit the program, but for now break
             break
+    stdscr.clear()
             
 
 if __name__ == "__main__":

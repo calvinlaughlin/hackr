@@ -14,8 +14,6 @@ dog_names = [
 # List of random ASCII characters for decaying effect
 ascii_chars = ['@', '#', '$', '%', '&', '*', '!', '?', '~']
 
-wrong = ["Wrong!", "Not that one!", "Nope!", "Again!", "Nah", "Not the right one.", "I regret to inform you that you have chosen wrong.", "Keep going."]
-
 def typing_puzzle(stdscr):
     # Setup curses
     height, width = stdscr.getmaxyx()
@@ -31,7 +29,6 @@ def typing_puzzle(stdscr):
     code_list = dog_names
     current_code = code_list.pop(0)
     decay_positions = []
-    wrong_message = ""
 
     while True:
         # Calculate remaining time
@@ -51,14 +48,9 @@ def typing_puzzle(stdscr):
         
         # Display current code to type
         stdscr.addstr(2, curses.COLS // 2 - len(current_code) // 2, current_code)
-        
+        stdscr.addstr(3, curses.COLS // 2 - len("Hit [ENTER] to guess") // 2, "Hit [ENTER] to guess")
         # Display input text
         stdscr.addstr(4, curses.COLS // 2 - len(input_text) // 2, input_text)
-        
-        # Display wrong message
-        if wrong_message:
-            stdscr.addstr(7, curses.COLS // 2 - len("ROADMAN") - 8 // 2, "ROADMAN")
-            stdscr.addstr(8, curses.COLS // 2 - len(wrong_message) // 2, wrong_message)
         
         # Calculate decay probability (exponential increase as time runs out)
         decay_probability = (1 - remaining_time / timer_duration) ** 3
@@ -85,7 +77,6 @@ def typing_puzzle(stdscr):
             # Check if input text matches current code
             if input_text == current_code and code_list:
                 current_code = code_list.pop(0)
-                wrong_message = wrong[random.randint(0, len(wrong) - 1)]
             input_text = ""
         elif key == '\b' or key == '\x7f':  # Handle backspace
             input_text = input_text[:-1]

@@ -100,7 +100,7 @@ def act1(stdscr):
     r1 = [
         (f'{username}! What took you so fucking long?', 'Roadman'),
         ("You're in, this is the only chance we got.", 'Roadman'),
-        ("This cat is running ArmorSafe v2. It's strong, but its not unbreakable!", 'Roadman'),
+        ("This system is running ArmorSafe v2. It's strong, but its not unbreakable!", 'Roadman'),
         ('@Bla3kH4wk and @AlexeiX, you two access the financial records.', 'Roadman'),
         (f'{username}, press [SPACE] to begin the transfer protocol.', 'Roadman')
     ]
@@ -156,7 +156,8 @@ def act1(stdscr):
     typing_puzzle(stdscr)
     
     computer_texts4 = [
-        ">>> Countermeasures engaged. Shutting down Connection."
+        ">>> Countermeasures engaged. Shutting down Connection.",
+        "[SPACE]"
     ] 
     stdscr.refresh()
     display_computer_text(stdscr, computer_texts4)
@@ -355,7 +356,7 @@ def main(stdscr):
     decay_from_top(stdscr)
     if selected_idx == 0: 
         act1(stdscr)
-        act2(stdscr)
+        act2(stdscr, USERNAME)
     else: 
         username = enter_name(stdscr)
         USERNAME = username

@@ -22,7 +22,7 @@ def display_words(stdscr, words, lives):
     curses.start_color()
     curses.init_pair(1, curses.COLOR_RED, curses.COLOR_BLACK)
     
-    instruction_text = "Guess the correct word (navigate with arrows, select with Enter):"
+    instruction_text = "Guess the correct word (navigate with up / down arrow, select with Enter):"
     lives_text = "Lives: " + '$' * lives
     lives_text_padded = lives_text + (' ' * (11 - len(lives_text)))
     stdscr.addstr(0, (max_x - len(instruction_text)) // 2, instruction_text)
