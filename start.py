@@ -345,6 +345,148 @@ def act2(stdscr, username):
     ]
     display_computer_text(stdscr, chck)
 
+#-------------------------------------------------------------------------------------------------#
+# ACT 3 - THE SET UP                                                                              #
+#-------------------------------------------------------------------------------------------------#
+def act3(stdscr, username):
+    
+    stdscr.clear()
+    intro = [
+        f">>> Location: Perth, Australia", 
+        f">>> Date: 11/07/1997",
+        f">>> Time: 1400 Hours",
+        f"",
+        f">>> 9 months after Operation Monaco",
+        f"",
+        f">>> Press [Space] to continue",
+    ]
+    display_computer_text(stdscr, intro)
+
+    hello = [
+        f">>> Welcome, Operative. Code name:{username}",
+        f">>> Status: Ghost",
+        f">>> Objective: Prepare and Plan",
+        f"",
+        f">>> Press [Space] to continue",
+    ]
+    display_computer_text(stdscr, hello)
+    
+    log1 = [
+        (f"467: Three months since I left Cuba. ", "[USER LOG]"),
+        (f"Three months of laying low, slowly crawling my way back into the game. ", "[USER LOG]"),
+        (f"I met the Gatekeeper, as planned. ", "[USER LOG]"),
+        (f"They’re giving me another shot, but it comes with strings attached. ", "[USER LOG]"),
+        (f"Pre-heist jobs, grunt work to set up the big one. ", "[USER LOG]"),
+        (f"I've been setting up contacts, gathering intel, and testing systems. ", "[USER LOG]"),
+        (f"Each step brings me closer to redemption. ", "[USER LOG]"),
+        (f"Now, I'm in Perth. ", "[USER LOG]"),
+        (f"The heat from the cops has cooled, but I'm still a ghost. ", "[USER LOG]"),
+        (f"The objective is clear: prepare and plan. ", "[USER LOG]"),
+        (f"Today, it's about installing new incognito software. ", "[USER LOG]"),
+        (f"The Gatekeeper's connections depend on it. ", "[USER LOG]"),
+        (f"Can't afford any digital footprints.", "[USER LOG]"),
+    ]
+    stream_text(stdscr, log1)
+    
+    pop1 = [
+        f">>> Install new Incognito Software.",
+        f">>> ERROR: Trojan Horse Detected.",
+        f">>> Prevent from being Hacked and Bugged. ",
+        f"",
+        f">>> Press [Space] to continue",
+    ]
+    display_computer_text(stdscr, pop1)
+    
+    # POP UP PUZZLE
+    subprocess.run(["python3", "pop-ups.py"], check=True)
+    
+    pop2 = [
+        f">>> Virus successfully removed. ",
+        f">>> Incognito Software Installed.",
+        f"",
+        f">>> Press [Space] to continue",
+    ]
+    display_computer_text(stdscr, pop2, blinking=True)
+    
+    log2 = [
+        (f"468: Whew, that was a close one. ", "[USER LOG]"),
+        (f"I can’t afford to mess up like that again, but the new incognito software is up and running. ", "[USER LOG]"),
+        (f"Now comes the real test. ", "[USER LOG]"),
+        (f"The Gatekeeper needs more proof that I can handle the pressure. ", "[USER LOG]"),
+        (f"It's time to rewire the network and regain full functionality. ", "[USER LOG]"),
+        (f"It’s just like old times, back in Vegas. ", "[USER LOG]"),
+        (f"That’s where the real fun happened. ", "[USER LOG]"),
+    ]
+    stream_text(stdscr, log2)
+    
+    flow1 = [
+        f">>> Patching into network.",
+        f">>> Connect the junctions and regain functionality.  ",
+        f"",
+        f">>> Press [Space] to continue",
+    ]
+    display_computer_text(stdscr, flow1)
+    
+    # FLOW PUZZLE
+    # TODO: add diego puzzle in here (flow puzzle rn on story doc)
+        
+    flow2 = [
+        f">>> Network functionality restored. ",
+        f"",
+        f">>> Press [Space] to continue",
+    ]
+    display_computer_text(stdscr, flow2)
+    
+    log3 = [
+        (f"The network's back online, but it's not over yet. ", "[USER LOG]"),
+        (f"The Gatekeeper wants to see speed and precision. ", "[USER LOG]"),
+        (f"It's not just about getting back into the game; it's about proving I still have what it takes.", "[USER LOG]"),
+        (f"Who knows what will happen if I fuck up. ", "[USER LOG]"),
+        (f"I have to lock in. ", "[USER LOG]"),
+    ]
+    stream_text(stdscr, log3)
+    
+    quick1 = [
+        f">>> >>> Agility test initiated... ",
+        f"",
+        f">>> Press [Space] to continue",
+    ]
+    display_computer_text(stdscr, quick1)
+    
+    # QUICK PUZZLE AGILITY TEST
+    subprocess.run(["python3", "quick.py"], check=True)
+    
+    quick2 = [
+        f">>> From: Gatekeeper",
+        f">>> SUBJECT: Judgement Day.",
+        f">>> MESSAGE:",
+        f">>> {username},",
+        f">>> You've shown you can still be useful. ",
+        f">>> The network is secure, and your skills are where they need to be. ",
+        f">>> The real heist is imminent. ",
+        f">>> Stay hidden and vigilant. ",
+        f">>> I'll send the details when it's time. ",
+        f">>> I'll be watching.",
+        f">>> Trust no one.",
+        f"",
+        f">>> Press [Space] to continue",
+    ]
+    display_computer_text(stdscr, quick2)
+    
+    computer_texts8 = [
+        "[CHECKPOINT REACHED]"
+    ]
+    display_computer_text(stdscr, computer_texts8)
+
+    # BEGIN ACT 4
+    act4(stdscr, username)
+
+#-------------------------------------------------------------------------------------------------#
+# ACT 4 - ????????????????                                                                        #
+#-------------------------------------------------------------------------------------------------#
+def act4(stdscr, username):
+    # act 4 goes here
+    pass
 
 def main(stdscr):
     # Turn off cursor blinking
