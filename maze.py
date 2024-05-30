@@ -418,15 +418,27 @@ def main(stdscr):
     curses.noecho()     # Turn off auto-echoing of keypress on to screen
     curses.cbreak()     # React to keys instantly, without waiting for enter to be pressed
     h, w = stdscr.getmaxyx()
-    
-    # select random maze from mazes
-    maze = mazes[random.randint(0, len(mazes)-1)]
 
-    # translate the maze and all functionality to the right by this amount:
-    x_translate = 90
+    # Ensure the window is large enough
+    if w < 130 or h < 40:
+        stdscr.addstr(0, 0, "Window too small. Please resize to at least 130x40.")
+        stdscr.refresh()
+        stdscr.getch()
+        return
+
+    # Select random maze from mazes
+    maze = mazes[random.randint(0, len(mazes)-1)]
     
+    # Calculate x_translate to start maze at the midpoint of the screen width
+    x_translate = w // 2
+
     y, x = 1, 2 + x_translate  # Start position of new mazes
     previous_position = (y, x)
+
+    # Ensure the maze does not exceed screen width
+    maze_width = max(len(row) for row in maze)
+    if x_translate + maze_width > w:
+        x_translate = w - maze_width
 
     # Initial drawing of the maze assuming window size is 130x40
     for i, row in enumerate(maze):
@@ -436,7 +448,7 @@ def main(stdscr):
 
     start_time = time.time()  # Start the timer
     duration = 120  # 2 minutes in seconds
-    timer_x = x_translate - 15 # new position for the timer
+    timer_x = x_translate - 15 # New position for the timer
 
     curses.start_color()
     curses.init_pair(1, curses.COLOR_YELLOW, curses.COLOR_BLACK)
@@ -482,10 +494,9 @@ def main(stdscr):
             stdscr.addstr(h//2, w//2 - len("Time's up!")//2, "Time's up!")
             stdscr.refresh()
             stdscr.getch()
-            # this could be sys.exit(100) to exit the program, but for now break
+            # This could be sys.exit(100) to exit the program, but for now break
             break
     stdscr.clear()
-            
 
 if __name__ == "__main__":
     curses.wrapper(main)
