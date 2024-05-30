@@ -433,10 +433,7 @@ def act3(stdscr, username):
     
 def act4(stdscr, username):
     # act 4 goes here
-        
-    
-    
-    
+    pass
 
 def main(stdscr):
     # Turn off cursor blinking
