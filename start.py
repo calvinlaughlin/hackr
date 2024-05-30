@@ -12,6 +12,7 @@ from quick import bar_game
 from fallout import main as fallout_main
 from impossible import typing_puzzle
 from haystack import hay_main
+from windowsizing import check_terminal_size
 
 import curses
 
@@ -614,6 +615,8 @@ def act4(stdscr, username):
     ]
     stream_text(stdscr, road6)
 
+    # resume transfer
+
 
 def main(stdscr):
     # Turn off cursor blinking
@@ -663,14 +666,32 @@ def main(stdscr):
     matrix_wash(stdscr)
     decay_from_top(stdscr)
     if selected_idx == 0: 
+        check_terminal_size(stdscr)
         act1(stdscr)
         act2(stdscr, USERNAME)
-    else: 
+        act3(stdscr, USERNAME)
+        act4(stdscr, USERNAME)
+
+    if selected_idx == 1: 
+        check_terminal_size(stdscr)
         username = enter_name(stdscr)
         USERNAME = username
+        act2(stdscr, username)
+        act3(stdscr, USERNAME)
+        act4(stdscr, USERNAME)
 
-        if selected_idx == 1: 
-            act2(stdscr, username)
+    if selected_idx == 2:
+        check_terminal_size(stdscr)
+        username = enter_name(stdscr)
+        USERNAME = username
+        act3(stdscr, USERNAME)
+        act4(stdscr, USERNAME)
+
+    if selected_idx == 3:
+        check_terminal_size(stdscr)
+        username = enter_name(stdscr)
+        USERNAME = username
+        act4(stdscr, USERNAME)
         
 
 if __name__ == "__main__":
