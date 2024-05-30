@@ -1,12 +1,13 @@
 import curses
 import random
 import string
+import textwrap
 
 def pick_words(all_words, length=4, num_words=10):
     words = [word.upper() for word in all_words if len(word) == length]
     return random.sample(words, num_words)
 
-def add_gibberish(words, total_gibberish_length=40):
+def add_gibberish(words, total_gibberish_length=20):
     gibberish_words = []
     for word in words:
         prefix_length = random.randint(0, total_gibberish_length)
@@ -17,20 +18,19 @@ def add_gibberish(words, total_gibberish_length=40):
     return gibberish_words
 
 def display_words(stdscr, words, lives, x_offset):
-    stdscr.clear()
     max_y, max_x = stdscr.getmaxyx()
     curses.start_color()
     curses.init_pair(1, curses.COLOR_RED, curses.COLOR_BLACK)
     
-    instruction_text = "Guess the correct word (navigate with up / down arrow, select with Enter):"
+    instruction_text = "CRACK THE PASSWORD:"
     lives_text = "Lives: " + '$' * lives
     lives_text_padded = lives_text + (' ' * (11 - len(lives_text)))
-    stdscr.addstr(0, x_offset + (max_x // 2 - len(instruction_text) // 2), instruction_text)
+    stdscr.addstr(max_y // 2 - len(words) // 2 - 2, x_offset + max_x // 4 - len(instruction_text) // 2, instruction_text)
     stdscr.attron(curses.color_pair(1))
-    stdscr.addstr(1, x_offset + (max_x // 2 - len(lives_text_padded) // 2), lives_text_padded)
+    stdscr.addstr(max_y // 2 - len(words) // 2 - 1, x_offset + max_x // 4 - len(lives_text_padded) // 2, lives_text_padded)
     stdscr.attroff(curses.color_pair(1))
     for idx, word in enumerate(words):
-        stdscr.addstr(idx + 3, x_offset + (max_x // 2 - len(word) // 2), word)
+        stdscr.addstr(max_y // 2 - len(words) // 2 + idx, x_offset + max_x // 4 - len(word) // 2, word)
     stdscr.refresh()
 
 def get_matching_letters(guess, correct_word):
@@ -39,9 +39,9 @@ def get_matching_letters(guess, correct_word):
 def game_loop(stdscr, gibberish_words, clean_words, correct_word):
     position = 0
     max_y, max_x = stdscr.getmaxyx()
-    x_offset = max_x // 2  # Offset to start the content on the right half
     history = []
     lives = 4  # Set the number of lives
+    x_offset = max_x // 2  # Start the content on the right half
 
     display_words(stdscr, gibberish_words, lives, x_offset)
     while True:
@@ -49,41 +49,46 @@ def game_loop(stdscr, gibberish_words, clean_words, correct_word):
             if idx == position:
                 start = word.index(clean_words[idx])
                 end = start + len(clean_words[idx])
-                word_start = x_offset + (max_x // 2 - len(word) // 2)
+                word_start = x_offset + max_x // 4 - len(word) // 2
 
                 # Ensure the positions are within the screen boundaries
                 if word_start < 0 or word_start + end > max_x:
                     continue
 
-                stdscr.addstr(idx + 3, word_start, word[:start])
-                stdscr.addstr(idx + 3, word_start + start, clean_words[idx], curses.A_REVERSE)
-                stdscr.addstr(idx + 3, word_start + end, word[end:])
+                stdscr.addstr(max_y // 2 - len(gibberish_words) // 2 + idx, word_start, word[:start])
+                stdscr.addstr(max_y // 2 - len(gibberish_words) // 2 + idx, word_start + start, clean_words[idx], curses.A_REVERSE)
+                stdscr.addstr(max_y // 2 - len(gibberish_words) // 2 + idx, word_start + end, word[end:])
             else:
-                stdscr.addstr(idx + 3, x_offset + (max_x // 2 - len(word) // 2), word)
+                stdscr.addstr(max_y // 2 - len(gibberish_words) // 2 + idx, x_offset + max_x // 4 - len(word) // 2, word)
 
         key = stdscr.getch()
-        if key == curses.KEY_UP and position > 0:
+        if (key == curses.KEY_LEFT or key == curses.KEY_UP) and position > 0:
             position -= 1
-        elif key == curses.KEY_DOWN and position < len(clean_words) - 1:
+        elif (key == curses.KEY_RIGHT or key == curses.KEY_DOWN) and position < len(clean_words) - 1:
             position += 1
-        elif key == 10:  # Enter key
+        elif key == 32:  # Enter key
             clean_word = clean_words[position]
             if clean_word != correct_word:
                 lives -= 1
                 display_words(stdscr, gibberish_words, lives, x_offset)  # Update display with new lives count
             matches = get_matching_letters(clean_word, correct_word)
-            feedback_msg = f"> Chosen: {clean_word} - Matches: {matches} correct positions. Lives remaining: {lives}"
-            history.append(feedback_msg)
+            if matches == len(correct_word):
+                feedback_msg = f"PASSWORD CRACKED: {correct_word} – [SPACE] to continue"
+            else:
+                feedback_msg = f"> Chosen: {clean_word} - Matches: {matches} correct positions. Lives remaining: {lives}"
+            wrapped_feedback = textwrap.wrap(feedback_msg, width=max_x // 2 - 4)
+            history.extend(wrapped_feedback)
+            display_words(stdscr, gibberish_words, lives, x_offset)
             for idx, msg in enumerate(history):
-                stdscr.addstr(idx + len(clean_words) + 5, x_offset + (max_x // 2 - len(msg) // 2), msg)
+                stdscr.addstr(max_y // 2 + len(gibberish_words) // 2 + 2 + idx, x_offset + max_x // 4 - len(msg) // 2, msg)
             stdscr.refresh()
             if clean_word == correct_word:
-                stdscr.addstr(max_y - 2, x_offset + (max_x // 2 - len("Correct! Press any key to exit.") // 2), "Correct! Press any key to exit.", curses.A_BOLD)
+                # stdscr.addstr(max_y - 2, x_offset + max_x // 4 - len("Correct! Press any key to exit.") // 2, "Correct! Press any key to exit.", curses.A_BOLD)
                 stdscr.refresh()
                 stdscr.getch()
                 break
             if lives <= 0:
-                stdscr.addstr(max_y - 2, x_offset + (max_x // 2 - len("Out of lives! Game over. Press any key to exit.") // 2), "Out of lives! Game over. Press any key to exit.", curses.A_BOLD)
+                stdscr.addstr(max_y - 2, x_offset + max_x // 4 - len("Out of lives! Game over. Press any key to exit.") // 2, "Out of lives! Game over. Press any key to exit.", curses.A_BOLD)
                 stdscr.refresh()
                 stdscr.getch()
                 break

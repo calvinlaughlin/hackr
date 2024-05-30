@@ -91,7 +91,7 @@ def endgame_message(stdscr, message, color_pair):
     stdscr.addstr(message_y, message_x, message, curses.A_BOLD | curses.color_pair(color_pair))
     stdscr.refresh()
 
-def main(stdscr):
+def hay_main(stdscr):
     curses.curs_set(0)
     curses.start_color()
     curses.init_pair(1, curses.COLOR_GREEN, curses.COLOR_BLACK)
@@ -166,4 +166,4 @@ def main(stdscr):
         stdscr.refresh()
 
 if __name__ == "__main__":
-    curses.wrapper(main)
+    curses.wrapper(hay_main)

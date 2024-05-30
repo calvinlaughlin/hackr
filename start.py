@@ -11,6 +11,7 @@ from quick import bar_game
 # from pop_ups import main as pop_ups_main
 from fallout import main as fallout_main
 from impossible import typing_puzzle
+from haystack import hay_main
 
 import curses
 
@@ -251,15 +252,17 @@ def act2(stdscr, username):
     display_computer_text(stdscr, hello)
 
     log1 = [
-        ("#431: I can't keep operating on this server. If I want to continue hacking, I need a new one.", "[USER LOG]"),
-        ("I just have to find one.", "[USER LOG]"),
-        ("Hoping to finally contact the GATEKEEPER once I'm running again.", "[USER LOG]"),
-        ("Going to attempt a server search. It's the only way.", "[USER LOG]")
+        ("It’s been 6 months since I’ve been ex-communicated.", "[USER LOG #431]"),
+        ("The police have followed me to Cuba! Those fuckers.", "[USER LOG #431]"),
+        ("It’s not safe here, I need to find somewhere else.", "[USER LOG #431]"),
+        ("I just need access to a secure server to reach the GATEKEEPER.", "[USER LOG #431]"),
+        ("Navigating this city feels like a maze, but it’s my only chance.", "[USER LOG #431]")
     ]
     stream_text(stdscr, log1)
 
     mz1 = [
-        f">>> Initiating M.A.Z.E. protocol",
+        f">>> Initiating M.A.Z.E. navigation protocol",
+        ">>> Objective: find a safehouse",
         ">>> Avoid surveillance traps and dead ends",
         "[SPACE] to begin protocol"
     ]
@@ -268,23 +271,24 @@ def act2(stdscr, username):
     maze_main(stdscr)
 
     mz1 = [
-        ">>> SECURE SERVER OBTAINED.",
-        ">>> Encryption: SHA-256"
+        ">>> Safe house location CONFIRMED",
+        "[SPACE]"
     ]
     display_computer_text(stdscr, mz1)
     
     log2 = [
-        ("#432: Found an open server on the dark web. Only problem is it's still encrypted.", "[USER LOG]"),
-        ("What's worse, my computer is beat up, barely holding together, but it'll have to do.", "[USER LOG]"),
-        ("Going to have to crack it if I want to use it.", "[USER LOG]"),
-        ("No room for errors, either. If I fail, I have to keep looking for another opening.", "[USER LOG]"),
-        ("Here goes nothing.", "[USER LOG]")
+        ("Whew, ok. I’ve made it to the new safe house.", "[USER LOG #432]"),
+        ("It’s a pretty rundown place, barely holding together, but it’ll do for now.", "[USER LOG #432]"),
+        ("There’s an incognito server here, looks like it hasn’t been touched in years.", "[USER LOG #432]"),
+        ("Great... it’s password protected, just what I needed.", "[USER LOG #432]"),
+        ("It looks like I have to crack this terminal to get access.", "[USER LOG #432]"),
+        ("I don’t have any room for errors and I only have a few attempts before it locks me out.", "[USER LOG #432]")
     ]
     stream_text(stdscr, log2)
 
     fall = [
         ">>> Cracking the terminal...",
-        ">>> ENTER PASSWORD. You have 4 attempts remaining."
+        ">>> [SPACE] to ENTER PASSWORD CRACK. You have 4 attempts remaining."
     ]
     display_computer_text(stdscr, fall)
 
@@ -292,19 +296,54 @@ def act2(stdscr, username):
 
     fall2 = [
         ">>> Password accepted.",
-        ">>> ACCESS GRANTED."
+        ">>> ACCESS GRANTED. [SPACE]",
     ]
     display_computer_text(stdscr, fall2, blinking=True)
 
     log3 = [
-        ("#433: Fuck yeah. I'm in.", "[USER LOG]"),
-        ("I'm confident I can access the GATEKEEPER from here", "[USER LOG]"),
-        ("Going to have to crack it if I want to use it.", "[USER LOG]"),
-        ("No room for errors, either. If I fail, I have to keep looking for another opening.", "[USER LOG]"),
-        ("Here goes nothing.", "[USER LOG]")
+        ("Finally, I’m in and I’ve bypassed the old server’s password.", "[USER LOG #433]"),
+        ("Now, I can access the Gatekeeper from here.", "[USER LOG #433]"),
+        ("It’s my only shot at getting back in the game, but I need to be careful.", "[USER LOG #433]"),
+        ("One wrong move, and I could be found out.", "[USER LOG #433]"),
+        ("It’s time to reach out and see if I can still pull some strings.", "[USER LOG #433]"),
+        ("First, I need to get his IP address.", "[USER LOG #433]")
     ]
     stream_text(stdscr, log3)
 
+    needle = [
+        ">>> Network Unreliable. TOR server required.",
+        ">>> Initiating Signal Trace Protocol...",
+        ">>> [SPACE] to locate the correct IP address. Be cautious of decoys and false leads."
+    ]
+    display_computer_text(stdscr, needle)
+
+    hay_main(stdscr)
+
+    final = [
+        ">>> Signal trace successful.",
+        ">>> (1) New message received.",
+        "[SPACE] to open mail"
+    ]
+    display_computer_text(stdscr, final)
+
+    msg = [
+        ">>> From: Gatekeeper",
+        ">>> SUBJECT: Redemption.",
+        ">>> MESSAGE:",
+        f"    {username},",
+        "    Your fall from grace was severe, but there may be a way back.",
+        "    Meet me at the following coordinates. I unfroze one of your accounts,",
+        "    codenamed PHOENIX. You should have enough funds there. Trust no one.",
+        ">>> COORDINATES: [Encrypted]",
+        "[SPACE]"
+    ]
+    display_computer_text(stdscr, msg)
+
+    chck = [
+        "[CHECKPOINT 2 REACHED]",
+        "[SPACE] to continue to ACT III"
+    ]
+    display_computer_text(stdscr, chck)
 
 
 def main(stdscr):
