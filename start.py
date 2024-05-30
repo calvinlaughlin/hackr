@@ -305,6 +305,10 @@ def act2(stdscr, username):
     ]
     stream_text(stdscr, log3)
 
+
+#-------------------------------------------------------------------------------------------------#
+# ACT 3 - THE SET UP                                                                              #
+#-------------------------------------------------------------------------------------------------#
 def act3(stdscr, username):
     
     stdscr.clear()
@@ -376,27 +380,26 @@ def act3(stdscr, username):
     ]
     stream_text(stdscr, log2)
     
-    quick1 = [
-        f">>> Initiating Agility Test.",
-        f">>> Press [spacebar] to rewire the network and regain functionality. ",
+    flow1 = [
+        f">>> Patching into network.",
+        f">>> Connect the junctions and regain functionality.  ",
         f"",
         f">>> Press [Space] to continue",
     ]
-    display_computer_text(stdscr, quick1)
+    display_computer_text(stdscr, flow1)
     
-    # QUICK PUZZLE
-    subprocess.run(["python3", "quick.py"], check=True)
-    
-    quick2 = [
+    # FLOW PUZZLE
+    # TODO: add diego puzzle in here (flow puzzle rn on story doc)
+        
+    flow2 = [
         f">>> Network functionality restored. ",
-        f">>> Typing Challenge to test agility initiated...",
         f"",
         f">>> Press [Space] to continue",
     ]
-    display_computer_text(stdscr, quick2)
+    display_computer_text(stdscr, flow2)
     
     log3 = [
-        (f"469: The network's back online, but it's not over yet. ", "[USER LOG]"),
+        (f"The network's back online, but it's not over yet. ", "[USER LOG]"),
         (f"The Gatekeeper wants to see speed and precision. ", "[USER LOG]"),
         (f"It's not just about getting back into the game; it's about proving I still have what it takes.", "[USER LOG]"),
         (f"Who knows what will happen if I fuck up. ", "[USER LOG]"),
@@ -404,9 +407,17 @@ def act3(stdscr, username):
     ]
     stream_text(stdscr, log3)
     
-    # TODO: add diego puzzle in here (flow puzzle rn on story doc)
+    quick1 = [
+        f">>> >>> Agility test initiated... ",
+        f"",
+        f">>> Press [Space] to continue",
+    ]
+    display_computer_text(stdscr, quick1)
     
-    puz1 = [
+    # QUICK PUZZLE AGILITY TEST
+    subprocess.run(["python3", "quick.py"], check=True)
+    
+    quick2 = [
         f">>> From: Gatekeeper",
         f">>> SUBJECT: Judgement Day.",
         f">>> MESSAGE:",
@@ -421,7 +432,7 @@ def act3(stdscr, username):
         f"",
         f">>> Press [Space] to continue",
     ]
-    display_computer_text(stdscr, puz1)
+    display_computer_text(stdscr, quick2)
     
     computer_texts8 = [
         "[CHECKPOINT REACHED]"
@@ -430,7 +441,10 @@ def act3(stdscr, username):
 
     # BEGIN ACT 4
     act4(stdscr, username)
-    
+
+#-------------------------------------------------------------------------------------------------#
+# ACT 4 - ????????????????                                                                        #
+#-------------------------------------------------------------------------------------------------#
 def act4(stdscr, username):
     # act 4 goes here
     pass
