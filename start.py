@@ -485,8 +485,135 @@ def act3(stdscr, username):
 # ACT 4 - ????????????????                                                                        #
 #-------------------------------------------------------------------------------------------------#
 def act4(stdscr, username):
-    # act 4 goes here
-    pass
+    stdscr.clear()
+    intro = [
+        f">>> Location: [REDACTED]", 
+        f">>> Date: 12/25/1997",
+        f">>> Time: 0246 Hours",
+        f">>> Operation Silent Night",
+        f"[SPACE]"
+    ]
+    display_computer_text(stdscr, intro)
+
+    intro2 = [
+        f">>> Welcome, Operative. Code name:{username}", 
+        f">>> Status: Active",
+        f">>> Objective: Don’t fuck up.",
+        f"[SPACE]"
+    ]
+    display_computer_text(stdscr, intro2)
+
+    road = [
+        (f"Hey {username}, remember me?", "Roadman"),
+        (f"I can’t afford to mess up like that again, but the new incognito software is up and running. ", "[USER LOG]"),
+        (f"Of course you do. Let’s hope this time you’ve got your head on straight.", "Roadman"),
+        (f"I swear, if you fuck this up… ", "Roadman"),
+    ]
+    stream_text(stdscr, road)
+
+    intro3 = [
+        f">>> Press [SPACE] to initiate the connection."
+    ]
+    display_computer_text(stdscr, intro3)
+
+    intro4 = [
+        ">>> Initiating connection to Server....",
+        ">>> Establishing secure link...",
+        ">>> Access granted. [SPACE]"
+    ]
+    display_computer_text(stdscr, intro3, blinking=True)
+
+    road2 = [
+        (f"Just like we rehearsed.", "Roadman"),
+        (f"Copa and Zee, access the financial records.", "Roadman"),
+        (f"{username}, you need to get us past the firewall.", "Roadman"),
+        (f"Do whatever it takes this time.", "Roadman"),
+    ]
+    stream_text(stdscr, road2)
+
+    cip = [
+        ">>> Accessing financial records...",
+        ">>> Access granted.",
+        ">>> Connecting to offshore account...",
+        "",
+        "[SPACE] to initiate Firewall Bypass Portal..."
+    ]
+    display_computer_text(stdscr, cip)
+
+    # INSERT CIPHER PUZZLE HERE
+
+    cip2 = [
+        ">>> Firewall penetration 25% complete...",
+        ">>> Firewall penetration 50% complete...",
+        ">>> Firewall penetration 75% complete...",
+        ">>> Firewall penetration 100% complete.",
+        ">>> Access to mainframe granted. [SPACE]"
+    ]
+    display_computer_text(stdscr, cip2)
+
+    road3 = [
+        (f"Alright, {username}, not bad.", "Roadman"),
+        (f"Bla3kH4wk and AlexeiX. I need you to start covering up our tracks and watch the chatter on the line.", "Roadman"),
+        (f"Alert me in case of anything.", "Roadman"),
+        (f"{username}, it’s time to connect the accounts.", "Roadman"),
+        (f"Remember, wire 90 million to offshore accounts [2352-6837-6469].", "Roadman"),
+        (f"You only have about 2 minutes to do this. Be fast.", "Roadman")
+    ]
+    stream_text(stdscr, road3)
+
+    flw = [
+        ">>> Initiating Account Link Protocol…",
+        ">>> Connect the two accounts by routing the transfer through secure nodes.",
+        ">>> Avoid detection and traps. [SPACE]",
+    ]
+    display_computer_text(stdscr, flw)
+
+    # INSERT FLOW PUZZLE HERE
+
+    flw2 = [
+        ">>> Node connection 25% complete...",
+        ">>> Node connection 50% complete...",
+        ">>> Node connection 75% complete...",
+        ">>> Node connection 100% complete...",
+        ">>> Bank accounts successfully linked.",
+        "Initiate fund transfer with [SPACE]"
+    ]
+    display_computer_text(stdscr, flw2)
+
+    road4 = [
+        (f"We’re almost there. Everything is going according to plan.", "Roadman")
+    ]
+    stream_text(stdscr, road4)
+
+    deny = [
+        ">>> Access denied.",
+        "",
+        ">>> ALERT! Security Breach Detected!",
+        "",
+        "[SPACE?]"
+    ]
+    display_computer_text(stdscr, deny)
+
+    road5 = [
+        (f"Shit. Shit. SHIT.", "Roadman"),
+        (f"We’ve got noise on the line, we have to move fast.", "Roadman"),
+        (f"Security measures are starting to be activated. They know we're here.", "Roadman"),
+        (f"[USER], it’s all up to you. DISABLE IT NOW.", "Roadman")
+    ]
+    stream_text(stdscr, road5)
+
+    # CRAZY FINAL BOSS PUZZLE FUCK YEAH
+
+    accept = [
+        ">>> Security disabled. Re-establish connectio with [SPACE]."
+    ]
+    display_computer_text(stdscr, accept)
+
+    road6 = [
+        (f"We’re still running out of time. We have about 15 seconds before they manually lock us out. Finish the job {username}.", "Roadman")
+    ]
+    stream_text(stdscr, road6)
+
 
 def main(stdscr):
     # Turn off cursor blinking
