@@ -36,8 +36,8 @@ def display_header(stdscr, target_ip):
     header_x = (curses.COLS - len("CONNECTING TO THE HOST")) // 2
     stdscr.addstr(header_y, header_x, "CONNECTING TO THE HOST", curses.A_BOLD)
     
-    subheader_x = (curses.COLS - len("Compromising global security one slip at a time")) // 2
-    stdscr.addstr(header_y + 1, subheader_x, "Compromising global security one slip at a time", curses.A_DIM)
+    subheader_x = (curses.COLS - len("Compromising global security one IP at a time")) // 2
+    stdscr.addstr(header_y + 1, subheader_x, "Compromising global security one IP at a time", curses.A_DIM)
     
     target_ip_x = (curses.COLS - len(target_ip)) // 2
     stdscr.addstr(header_y + 2, target_ip_x, target_ip, curses.A_BOLD | curses.A_BLINK)
