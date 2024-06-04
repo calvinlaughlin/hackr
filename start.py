@@ -13,6 +13,7 @@ from fallout import main as fallout_main
 from impossible import typing_puzzle
 from haystack import hay_main
 from windowsizing import check_terminal_size
+from flow import flow_main
 
 import curses
 
@@ -222,9 +223,6 @@ def act1(stdscr):
         "[CHECKPOINT REACHED]"
     ]
     display_computer_text(stdscr, computer_texts8)
-
-    # BEGIN ACT 2
-    act2(stdscr, username)
     
 
 #-------------------------------------------------------------------------------------------------#
@@ -399,7 +397,7 @@ def act3(stdscr, username):
     display_computer_text(stdscr, pop1)
     
     # POP UP PUZZLE
-    subprocess.run(["python3", "pop-ups.py"], check=True)
+    # subprocess.run(["python3", "pop-ups.py"], check=True)
     
     pop2 = [
         f">>> Virus successfully removed. ",
@@ -429,7 +427,7 @@ def act3(stdscr, username):
     display_computer_text(stdscr, flow1)
     
     # FLOW PUZZLE
-    # TODO: add diego puzzle in here (flow puzzle rn on story doc)
+    flow_main(stdscr)
         
     flow2 = [
         f">>> Network functionality restored. ",
@@ -475,12 +473,10 @@ def act3(stdscr, username):
     display_computer_text(stdscr, quick2)
     
     computer_texts8 = [
-        "[CHECKPOINT REACHED]"
+        "[CHECKPOINT REACHED]",
+        "[SPACE]"
     ]
     display_computer_text(stdscr, computer_texts8)
-
-    # BEGIN ACT 4
-    act4(stdscr, username)
 
 #-------------------------------------------------------------------------------------------------#
 # ACT 4 - ????????????????                                                                        #

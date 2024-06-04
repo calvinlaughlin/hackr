@@ -192,7 +192,7 @@ def flash_win(stdscr):
         if stdscr.getch() != -1:
             break
 
-def main(stdscr):
+def flow_main(stdscr):
     signal.signal(signal.SIGINT, lambda s, f: exit_game(stdscr))
 
     global board, cursor_x, cursor_y, time_left, running
@@ -258,4 +258,4 @@ def exit_game(stdscr):
     print("\nGame exited.")
 
 if __name__ == "__main__":
-    curses.wrapper(main)
+    curses.wrapper(flow_main)
