@@ -1,7 +1,7 @@
 import curses
 
 # Desired minimum terminal size
-MIN_ROWS = 40
+MIN_ROWS = 50
 MIN_COLS = 140
 
 def check_terminal_size(stdscr):
@@ -28,6 +28,9 @@ def check_terminal_size(stdscr):
             stdscr.clear()
             msg = f"Please resize your terminal to at least {MIN_COLS} columns and {MIN_ROWS} rows."
             stdscr.addstr(max_y // 2, (max_x - len(msg)) // 2, msg)
+            stdscr.refresh()
+            msg = f"Simply: make bigger"
+            stdscr.addstr(max_y // 2 + 1, (max_x - len(msg)) // 2, msg)
             stdscr.refresh()
         
         # Refresh and wait for a short time before checking again

@@ -142,7 +142,7 @@ def hay_main(stdscr):
         elif key == ord('q'):
             timer_running = False
             break
-        elif key == ord('\n'):
+        elif key == ord(' '):
             if tuple(cursor_pos) == target_position:
                 timer_running = False
                 for _ in range(3):
