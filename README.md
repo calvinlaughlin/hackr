@@ -1,13 +1,13 @@
 ## How to install the HACK OS
 
 ### Requirements
-1. Python 3.6 or higher
-2. pip3 (Python package installer) or pip
+1. Python 3
+2. pip3 (Python package installer)
 
 ### Make a clone of the repo
 - Open Terminal
-- Clone this repo to your computer using the following commands `git clone https://github.com/yourusername/hackOS.git`
-- navigate to the directory using `cd hackOS`
+- Clone this repo to your computer using the following commands `[git clone https://github.com/yourusername/hackOS.git](https://github.com/calvinlaughlin/hackr.git)`
+- Navigate to the directory using `cd hackr`
 
 ### Install the required packages
 - The main packages to install should be `curses` and `pygame` which you can install using `pip3 install curses pygame`
