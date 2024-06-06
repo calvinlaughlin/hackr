@@ -31,6 +31,18 @@ def create_grid(rows, cols, target_ip):
         grid.append(row)
     return grid, target_position
 
+# def display_header(stdscr, target_ip):
+#     header_y = 2
+#     header_x = (curses.COLS - len("CONNECTING TO THE HOST")) // 2
+#     stdscr.addstr(header_y, header_x, "CONNECTING TO THE HOST", curses.A_BOLD)
+    
+#     subheader_x = (curses.COLS - len("Compromising global security one IP at a time")) // 2
+#     stdscr.addstr(header_y + 1, subheader_x, "Compromising global security one IP at a time", curses.A_DIM)
+    
+    
+#     target_ip_x = (curses.COLS - len(target_ip)) // 2
+#     stdscr.addstr(header_y + 2, target_ip_x, target_ip, curses.A_BOLD | curses.A_BLINK)
+
 def display_header(stdscr, target_ip):
     header_y = 2
     header_x = (curses.COLS - len("CONNECTING TO THE HOST")) // 2
@@ -39,8 +51,14 @@ def display_header(stdscr, target_ip):
     subheader_x = (curses.COLS - len("Compromising global security one IP at a time")) // 2
     stdscr.addstr(header_y + 1, subheader_x, "Compromising global security one IP at a time", curses.A_DIM)
     
+    # Add a new line below the "compromising global security" line
+    instruction_line_1 = (curses.COLS - len("USE THE ARROW KEYS TO FIND THE FLASHING IP FLASHING BELOW AND PRESS [SPACE] TO SELECT")) // 2
+    stdscr.addstr(header_y + 2, instruction_line_1, "USE THE ARROW KEYS TO FIND THE FLASHING IP BELOW AND PRESS [SPACE] TO SELECT", curses.A_BOLD)
+
+
+    
     target_ip_x = (curses.COLS - len(target_ip)) // 2
-    stdscr.addstr(header_y + 2, target_ip_x, target_ip, curses.A_BOLD | curses.A_BLINK)
+    stdscr.addstr(header_y + 3, target_ip_x, target_ip, curses.A_BOLD | curses.A_BLINK)
 
 def display_grid(stdscr, grid, cursor_pos, highlight=False, success=False):
     start_y = 11
