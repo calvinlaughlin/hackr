@@ -263,6 +263,7 @@ def act2(stdscr, username):
         f">>> Initiating M.A.Z.E. navigation protocol",
         ">>> Objective: find a safehouse",
         ">>> Avoid surveillance traps and dead ends",
+        ">>> Use the arrow keys to navigate the @ from S to E",
         "[SPACE] to begin protocol"
     ]
     display_computer_text(stdscr, mz1)
@@ -287,6 +288,9 @@ def act2(stdscr, username):
 
     fall = [
         ">>> Cracking the terminal...",
+        ">>> Use the arrow keys and press enter to guess a word",
+        ">>> After each guess, you will be told the number of character slots that it shares with the password",
+        ">>> Hint...think wordle.",
         ">>> [SPACE] to ENTER PASSWORD CRACK. You have 4 attempts remaining."
     ]
     display_computer_text(stdscr, fall)

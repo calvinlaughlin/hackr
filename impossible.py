@@ -48,7 +48,7 @@ def typing_puzzle(stdscr):
         
         # Display current code to type
         stdscr.addstr(2, curses.COLS // 2 - len(current_code) // 2, current_code)
-        stdscr.addstr(3, curses.COLS // 2 - len("Hit [ENTER] to guess") // 2, "Hit [ENTER] to guess")
+        stdscr.addstr(3, curses.COLS // 2 - len("Type the name above and hit [ENTER] to guess") // 2, "Type the name above and hit [ENTER] to guess")
         # Display input text
         stdscr.addstr(4, curses.COLS // 2 - len(input_text) // 2, input_text)
         
