@@ -268,7 +268,7 @@ def act2(stdscr, username):
     ]
     display_computer_text(stdscr, mz1)
 
-    maze_main(stdscr)
+    # maze_main(stdscr)
 
     mz1 = [
         ">>> Safe house location CONFIRMED",
@@ -288,14 +288,14 @@ def act2(stdscr, username):
 
     fall = [
         ">>> Cracking the terminal...",
-        ">>> Use the arrow keys and press enter to guess a word",
+        ">>> Use the arrow keys and press [SPACE] to guess a word",
         ">>> After each guess, you will be told the number of character slots that it shares with the password",
-        ">>> Hint...think wordle.",
-        ">>> [SPACE] to ENTER PASSWORD CRACK. You have 4 attempts remaining."
+        ">>> Hint...think Wordle.",
+        ">>> [SPACE] to ENTER PASSWORD CRACK. You have 4 attempts."
     ]
     display_computer_text(stdscr, fall)
 
-    fallout_main(stdscr)
+    # fallout_main(stdscr)
 
     fall2 = [
         ">>> Password accepted.",
@@ -316,7 +316,9 @@ def act2(stdscr, username):
     needle = [
         ">>> Network Unreliable. TOR server required.",
         ">>> Initiating Signal Trace Protocol...",
-        ">>> [SPACE] to locate the correct IP address. Be cautious of decoys and false leads."
+        ">>> Locate the correct IP address. Be cautious of decoys and false leads.",
+        ">>> You'll see the IP address that we're looking for flashing at the top,",
+        ">>> Use the arrow keys to find it in the large group of numbers and press [SPACE] once you have it."
     ]
     display_computer_text(stdscr, needle)
 
@@ -425,6 +427,9 @@ def act3(stdscr, username):
     flow1 = [
         f">>> Patching into network.",
         f">>> Connect the junctions and regain functionality.  ",
+        f">>> Use the arrow keys to move the cursor to the piece you want to rotate",
+        f">>> Press [r] to rotate it,",
+        f">>> Rewire the circuits so that there are no gaps ",
         f"",
         f">>> Press [Space] to continue",
     ]
