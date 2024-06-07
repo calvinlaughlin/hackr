@@ -74,11 +74,11 @@ def new_ui(stdscr, username='ANONYMOUS'):
 #-------------------------------------------------------------------------------------------------#
 # ACT 1 - INTRO SEQUENCE                                                                          #
 #-------------------------------------------------------------------------------------------------#
-def act1(stdscr):
+def act1(stdscr, username):
     height, width = stdscr.getmaxyx()
 
-    username = enter_name(stdscr)
-    USERNAME = username
+    # username = enter_name(stdscr)
+    # USERNAME = username
 
     computer_texts = [
         f">>> Welcome, Operative. Code name: {username}",
@@ -667,7 +667,9 @@ def main(stdscr):
     decay_from_top(stdscr)
     if selected_idx == 0: 
         check_terminal_size(stdscr)
-        act1(stdscr)
+        username = enter_name(stdscr)
+        USERNAME = username
+        act1(stdscr, USERNAME)
         act2(stdscr, USERNAME)
         act3(stdscr, USERNAME)
         act4(stdscr, USERNAME)
