@@ -4,7 +4,7 @@
 
 If that didn't work, please refer to the below instructions for the longer install :)
 
-## How to install the HACK OS
+## HackOS Full Installation Guide
 
 ### Requirements
 1. Python 3
