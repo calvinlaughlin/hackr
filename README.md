@@ -1,6 +1,8 @@
 ## HackOS Quickstart
-1. Clone the repo to your computer by clicking on the green button that says "<> Code" up top. You can download as a zip file, or clone it with your terminal using the command `[git clone https://github.com/yourusername/hackOS.git](https://github.com/calvinlaughlin/hackr.git)`
-2. Navigate to the directory `hackr` and start the game by running `sh start.sh` in your terminal!
+1. Open your Terminal (CMD+Space on Mac, search "Terminal")
+2. Clone this repository using the command `[git clone https://github.com/yourusername/hackOS.git](https://github.com/calvinlaughlin/hackr.git)`
+3. Navigate to the directory `hackr` and start the game by running `sh start.sh` in your terminal
+4. Enjoy the game!
 
 If that didn't work, please refer to the below instructions for the longer install :)
 
