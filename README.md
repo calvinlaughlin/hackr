@@ -1,3 +1,4 @@
+To learn about our design process, check out our [Design Document](https://github.com/calvinlaughlin/hackr/blob/main/Hack%20OS%20Design.pdf)!
 ## HackOS Quickstart
 1. Open your Terminal (CMD+Space on Mac, search "Terminal")
 2. Clone this repository using the command `[git clone https://github.com/yourusername/hackOS.git](https://github.com/calvinlaughlin/hackr.git)`
